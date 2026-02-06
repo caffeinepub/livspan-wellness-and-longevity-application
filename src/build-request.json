@@ -1,0 +1,109 @@
+{
+  "kind": "build_request",
+  "title": "Redesign routine input controls to match the Dashboard style (replace sliders with modern alternatives)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-10"
+        ],
+        "quotes": [
+          "Eingabe der Rotinen neu gestalten, es muss zum Aussehen des Dashboard passen, was gibt's noch außer Schieberegler?",
+          "setze alle Rotinen nach deinen Vorschläge um"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Fasting, Sleep, Nutrition, Stress/Vitals, and Body Composition inputs no longer use the slider UI as the primary interaction (GradientSlider/Slider is not the main control presented to the user).",
+        "All routine values (fastingHours, sleepDuration, sleepQuality, proteinIntake, veggieIntake, waterIntake, systolic, diastolic, pulse, weight, bodyFat, muscleMass) remain editable and feed into the existing calculations and Save Daily Routine flow unchanged.",
+        "Existing min/max/step constraints are preserved (e.g., fasting 0–24 step 0.5; sleep duration 0–10 step 0.5; sleep quality 0–10 step 1; etc.).",
+        "Routine cards still visually fit the existing luxury/glass dashboard design (no unstyled HTML inputs)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-10"
+        ],
+        "quotes": [
+          "Kreiseingaben: Ein kleiner runder Dial, den man drehen kann (wie ein Mini‑Score‑Ring)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least two routine inputs use ChronographDial as the primary control (e.g., fastingHours and sleepQuality, or pulse and sleepQuality).",
+        "Dial interactions work with both mouse and touch, and values snap to the configured step (matching current slider steps).",
+        "The dial control displays an English label and unit (if applicable) and visually aligns with the existing glass/luxury theme (spacing, typography, colors)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-10"
+        ],
+        "quotes": [
+          "Stepper: Plus/Minus‑Buttons mit animierten Zahlen.",
+          "Segmentierte Balken: 3 bis 5 Segmente, die sich farbig füllen.",
+          "Chips: Kleine Tags wie „gut“, „okay“, „schlecht“."
+        ]
+      },
+      "acceptanceCriteria": [
+        "StressCard uses non-slider controls for systolic/diastolic/pulse (e.g., stepper +/- with direct numeric display) and still computes and displays the same status indicator behavior.",
+        "NutritionCard replaces sliders with modern controls (e.g., stepper for grams/liters plus optional preset chips like common increments), while preserving current computed targets and displayed values.",
+        "BodyCompositionCard replaces sliders with modern controls (e.g., steppers and/or compact dial), while BMI display and category coloring remain correct and unchanged.",
+        "All newly introduced user-facing strings for these new controls are in English (do not add new German strings)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-10"
+        ],
+        "quotes": [
+          "es muss zum Aussehen des Dashboard passen"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A small set of reusable input components (e.g., StepperInput, SegmentedControl/Chips) is used across multiple routine cards instead of duplicating ad-hoc UI per card.",
+        "Value changes animate subtly (e.g., number transitions or soft highlight) and do not degrade dashboard readability or performance.",
+        "No changes are made to the Internet Identity hooks or other immutable frontend paths."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend user-facing text introduced by this change must be in English.",
+    "Do not edit files under frontend/src/components/ui (compose existing shadcn components instead).",
+    "Do not modify immutable paths listed in SYSTEM_CONTEXT (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Keep the backend API contract unchanged; routine values must still be saved via the existing completeRoutines flow."
+  ],
+  "nonGoals": [
+    "Adding new routine categories beyond the existing ones on the Dashboard.",
+    "Changing scoring formulas, coaching logic, or backend persistence behavior.",
+    "Introducing third-party UI libraries beyond what is already in the project."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

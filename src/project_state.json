@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Project to redesign routine input controls to match the dashboard look, replacing sliders with more modern UI components across all routines.",
+  "architectural_notes": [
+    "Routine input components should align with dashboard visual design; replace sliders with alternative controls (e.g., stepper, segmented control, chips, toggles, dial, wheel picker) depending on routine type."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-replace-slider-based-inputs-across-all-routine-cards-with-modern-dashboard-matching-input-controls-avoid-classic-horizontal-sliders-while-keeping-the-same-underlying-numeric-ranges-steps-and-preserving-existing-state-updates-localstorage-behavior",
+      "title": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-and-apply-a-dial-based-input-using-the-existing-chronographdial-component-for-routine-values-where-a-circular-control-better-matches-the-dashboard-aesthetic-and-integrate-it-into-the-relevant-routine-cards",
+      "title": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-stepper-and-segmented-chip-style-inputs-as-slider-replacements-for-the-remaining-routine-fields-choosing-control-types-that-match-the-earlier-recommendations-e-g-steppers-for-precise-numeric-vitals-and-body-composition-segmented-chips-for-qualitative-ratings-and-update-the-affected-routine-components-accordingly",
+      "title": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-redesigned-routine-inputs-remain-consistent-and-reusable-by-introducing-shared-ui-primitives-components-as-needed-and-applying-consistent-interaction-motion-across-routine-cards-smooth-value-transitions-no-jarring-jumps",
+      "title": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Redesign routine input UI to match dashboard style, replacing sliders with recommended modern controls across all routines",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Redesign routine input controls to match the Dashboard style (replace sliders with modern alternatives)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

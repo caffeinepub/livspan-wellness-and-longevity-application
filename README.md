@@ -1,2 +1,3 @@
-# livspan-wellness-and-longevity-application
-Exported from Caffeine project: Redesign routine input controls to match the Dashboard style (replace sliders with modern alternatives)
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

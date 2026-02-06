@@ -1,0 +1,104 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-replace-slider-based-inputs-across-all-routine-cards-with-modern-dashboard-matching-input-controls-avoid-classic-horizontal-sliders-while-keeping-the-same-underlying-numeric-ranges-steps-and-preserving-existing-state-updates-localstorage-behavior",
+      "featureTitle": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+      "files": [
+        "frontend/src/components/BodyCompositionCard.tsx",
+        "frontend/src/components/FastingTimer.tsx",
+        "frontend/src/components/NutritionCard.tsx",
+        "frontend/src/components/SleepCard.tsx",
+        "frontend/src/components/StressCard.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-and-apply-a-dial-based-input-using-the-existing-chronographdial-component-for-routine-values-where-a-circular-control-better-matches-the-dashboard-aesthetic-and-integrate-it-into-the-relevant-routine-cards",
+      "featureTitle": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+      "files": [
+        "frontend/src/components/ChronographDial.tsx",
+        "frontend/src/components/FastingTimer.tsx",
+        "frontend/src/components/SleepCard.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-stepper-and-segmented-chip-style-inputs-as-slider-replacements-for-the-remaining-routine-fields-choosing-control-types-that-match-the-earlier-recommendations-e-g-steppers-for-precise-numeric-vitals-and-body-composition-segmented-chips-for-qualitative-ratings-and-update-the-affected-routine-components-accordingly",
+      "featureTitle": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+      "files": [
+        "frontend/src/components/BodyCompositionCard.tsx",
+        "frontend/src/components/ChipsInput.tsx",
+        "frontend/src/components/NutritionCard.tsx",
+        "frontend/src/components/StepperInput.tsx",
+        "frontend/src/components/StressCard.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-redesigned-routine-inputs-remain-consistent-and-reusable-by-introducing-shared-ui-primitives-components-as-needed-and-applying-consistent-interaction-motion-across-routine-cards-smooth-value-transitions-no-jarring-jumps",
+      "featureTitle": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+      "files": [
+        "frontend/src/components/BodyCompositionCard.tsx",
+        "frontend/src/components/FastingTimer.tsx",
+        "frontend/src/components/NutritionCard.tsx",
+        "frontend/src/components/SleepCard.tsx",
+        "frontend/src/components/StressCard.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
