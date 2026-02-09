@@ -62,41 +62,45 @@ export default function SmartInsightsOverlay({ score, scoreType, isGerman }: Sma
   const getIconComponent = () => {
     switch (icon) {
       case 'praise':
-        return <Award className="h-6 w-6 text-luxury-gold-bright" />;
+        return <Award className="h-6 w-6 text-blue-violet-light" />;
       case 'warning':
         return <AlertCircle className="h-6 w-6 text-yellow-500" />;
       default:
-        return <TrendingUp className="h-6 w-6 text-blue-500" />;
+        return <TrendingUp className="h-6 w-6 text-blue-violet" />;
     }
   };
 
   const getBorderColor = () => {
     switch (icon) {
       case 'praise':
-        return 'border-luxury-gold/50';
+        return 'border-blue-violet-light/40';
       case 'warning':
-        return 'border-yellow-500/30';
+        return 'border-yellow-500/40';
       default:
-        return 'border-blue-500/30';
+        return 'border-blue-violet/40';
+    }
+  };
+
+  const getGlowClass = () => {
+    switch (icon) {
+      case 'praise':
+        return 'shadow-glow';
+      case 'warning':
+        return 'shadow-[0_0_20px_rgba(234,179,8,0.3)]';
+      default:
+        return 'shadow-glow-sm';
     }
   };
 
   return (
-    <div 
-      className={`glass-panel rounded-lg p-4 border-2 ${getBorderColor()} shadow-glow animate-slide-up mt-4`}
-      style={{
-        animation: 'slideUp 0.5s ease-out forwards'
-      }}
-    >
-      <div className="flex items-start gap-3">
-        <div className="flex-shrink-0 mt-0.5">
-          {getIconComponent()}
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium text-foreground leading-relaxed">
-            {message}
-          </p>
-        </div>
+    <div className={`animate-slide-up glass-panel ${getBorderColor()} ${getGlowClass()} p-4 rounded-lg flex items-start gap-3 mb-4`}>
+      <div className="flex-shrink-0 mt-0.5">
+        {getIconComponent()}
+      </div>
+      <div className="flex-1">
+        <p className="text-sm leading-relaxed text-foreground/90">
+          {message}
+        </p>
       </div>
     </div>
   );

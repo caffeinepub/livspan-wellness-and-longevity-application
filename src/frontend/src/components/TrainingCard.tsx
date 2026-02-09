@@ -92,7 +92,7 @@ export default function TrainingCard({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src="/assets/generated/morning-routine-transparent.dim_64x64.png" alt="Training" className="h-8 w-8 drop-shadow-md" />
-            <CardTitle className="text-lg">{isGerman ? 'Training' : 'Training'}</CardTitle>
+            <CardTitle className="text-lg luxury-text-gold">{isGerman ? 'Training' : 'Training'}</CardTitle>
           </div>
           <div className="flex gap-2">
             {onSaveTrainings && (
@@ -101,7 +101,7 @@ export default function TrainingCard({
                 variant="outline" 
                 onClick={handleSaveTrainings}
                 disabled={isSaving || trainingSessions.length === 0}
-                className="transition-all duration-200 hover:scale-105"
+                className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
                 title={isGerman ? 'Training speichern' : 'Save training'}
               >
                 <Save className="h-4 w-4" />
@@ -113,13 +113,13 @@ export default function TrainingCard({
                 variant="outline" 
                 onClick={onClearTrainings}
                 disabled={isLoading}
-                className="transition-all duration-200 hover:scale-105"
+                className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
                 title={isGerman ? 'Training löschen' : 'Clear training'}
               >
                 <RotateCcw className="h-4 w-4" />
               </Button>
             )}
-            <Button size="sm" variant="outline" onClick={() => setShowForm(!showForm)} className="transition-all duration-200 hover:scale-105">
+            <Button size="sm" variant="outline" onClick={() => setShowForm(!showForm)} className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10">
               {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             </Button>
           </div>
@@ -148,7 +148,7 @@ export default function TrainingCard({
         )}
 
         {showForm && (
-          <div className="space-y-4 rounded-lg border border-primary/30 bg-primary/5 backdrop-blur-sm p-4">
+          <div className="space-y-4 rounded-lg border border-luxury-gold/30 bg-luxury-gold/5 backdrop-blur-sm p-4">
             <div className="space-y-2">
               <Label htmlFor="training-type">{isGerman ? 'Trainingstyp' : 'Training Type'}</Label>
               <Select value={trainingType} onValueChange={setTrainingType}>
@@ -203,7 +203,7 @@ export default function TrainingCard({
               </Select>
             </div>
 
-            <Button onClick={handleAddTraining} className="w-full transition-all duration-200 hover:scale-105" disabled={!duration || parseInt(duration) <= 0}>
+            <Button onClick={handleAddTraining} className="w-full transition-all duration-200 hover:scale-105 bg-luxury-gold hover:bg-luxury-gold-bright text-black" disabled={!duration || parseInt(duration) <= 0}>
               {isGerman ? 'Training hinzufügen' : 'Add Training'}
             </Button>
           </div>

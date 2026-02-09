@@ -39,7 +39,7 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-luxury-gold/20 glass-panel shadow-glass">
+      <header className="sticky top-0 z-50 w-full border-b border-primary/20 glass-panel shadow-glass">
         <div className="container px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-3">
@@ -48,14 +48,14 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
                   <Button 
                     variant="outline" 
                     size="icon" 
-                    className="border-luxury-gold/30 bg-luxury-gold/5 hover:bg-luxury-gold/10 transition-all duration-200 hover:scale-110 shadow-glow-sm"
+                    className="border-primary/30 bg-primary/5 hover:bg-primary/10 transition-all duration-200 hover:scale-110 shadow-glow-sm"
                   >
-                    <Menu className="h-5 w-5 text-luxury-gold" />
+                    <Menu className="h-5 w-5 text-primary" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[280px] glass-panel border-r border-luxury-gold/20">
+                <SheetContent side="left" className="w-[280px] glass-panel border-r border-primary/20">
                   <div className="flex flex-col gap-4 mt-8">
-                    <div className="mb-4 pb-4 border-b border-luxury-gold/20">
+                    <div className="mb-4 pb-4 border-b border-primary/20">
                       <h2 className="text-lg font-bold luxury-text-gold">
                         Navigation
                       </h2>
@@ -98,7 +98,7 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
                       <span>LIV Wallet</span>
                     </Button>
                     
-                    <div className="border-t border-luxury-gold/20 my-2" />
+                    <div className="border-t border-primary/20 my-2" />
                     
                     <Button
                       variant="ghost"
@@ -132,8 +132,8 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-luxury-gold/30 luxury-gradient-gold backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 shadow-glow-sm">
-                <Coins className="h-4 w-4 text-luxury-gold-bright" />
+              <div className="flex items-center gap-2 rounded-full border border-primary/30 luxury-gradient-gold backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 shadow-glow-sm">
+                <Coins className="h-4 w-4 text-primary" />
                 <span className="text-sm font-semibold text-foreground">{tokenBalance || 0}</span>
                 <span className="text-xs text-muted-foreground">LIV</span>
               </div>
@@ -148,7 +148,7 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
             </div>
           </div>
 
-          <div className="hidden sm:flex h-12 items-center border-t border-luxury-gold/20">
+          <div className="hidden sm:flex h-12 items-center border-t border-primary/20">
             <nav className="flex items-center gap-2">
               <Button
                 variant={currentPath === '/' ? 'default' : 'ghost'}

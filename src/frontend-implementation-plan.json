@@ -1,146 +1,191 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Dashboard routine input redesign (dials, steppers, chips) replacing sliders",
+  "title": "Premium gold Dashboard redesign with animated energy background, Energy Capsules, portal score ring, and Future Projection section",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Replace slider-based routine inputs across all routine cards with modern, dashboard-matching controls while preserving numeric ranges/steps and existing state/localStorage behavior.",
+      "summary": "Replace the Dashboard’s blue–violet theme with a premium gold + dark jade + emerald/turquoise palette (ruby-red only for warnings) across surfaces while preserving all existing Dashboard functionality.",
       "acceptanceCriteria": [
-        "Fasting, Sleep, Nutrition, Stress/Vitals, and Body Composition inputs no longer use the slider UI as the primary interaction (GradientSlider/Slider is not the main control presented to the user).",
-        "All routine values (fastingHours, sleepDuration, sleepQuality, proteinIntake, veggieIntake, waterIntake, systolic, diastolic, pulse, weight, bodyFat, muscleMass) remain editable and feed into the existing calculations and Save Daily Routine flow unchanged.",
-        "Existing min/max/step constraints are preserved (e.g., fasting 0–24 step 0.5; sleep duration 0–10 step 0.5; sleep quality 0–10 step 1; etc.).",
-        "Routine cards still visually fit the existing luxury/glass dashboard design (no unstyled HTML inputs)."
+        "Dashboard no longer uses the blue–violet palette as the primary accent; the dominant accents match gold/jade/emerald/turquoise, and destructive/warning states remain ruby-red.",
+        "All newly introduced user-facing labels are in English (and still respect the existing German/English toggle where applicable).",
+        "No existing tracking inputs, calculations, or mutations on the Dashboard are removed or functionally altered."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/FastingTimer.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Replace the current GradientSlider-based fastingHours control with a modern non-slider control (dial as primary per REQ-2), preserving min/max/step (0–24, step 0.5) and keeping the same onFastingDurationChange state updates/localStorage behavior in Dashboard. Ensure any newly introduced user-facing strings are English."
+          "description": "Update global theme tokens and utility classes to the premium gold + dark jade + emerald/turquoise palette, keeping ruby-red for destructive/warning, and refine glass/bokeh depth styling for Dashboard surfaces."
         },
         {
-          "path": "frontend/src/components/SleepCard.tsx",
+          "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Remove GradientSlider as the primary UI for sleepDuration and sleepQuality, replacing with dashboard-styled modern alternatives (dial/stepper/chips as appropriate), preserving min/max/step (duration 0–10 step 0.5; quality 0–10 step 1) and keeping the same callback-driven state updates from Dashboard."
+          "description": "Adjust Tailwind extended colors/shadows/animations to align with the new premium palette (gold/jade/emerald/turquoise) while preserving destructive/ruby usage and existing utility class compatibility."
         },
         {
-          "path": "frontend/src/components/NutritionCard.tsx",
+          "path": "frontend/src/utils/theme.ts",
           "operation": "modify",
-          "description": "Replace GradientSlider controls for proteinIntake, veggieIntake, and waterIntake with modern controls (steppers/chips), preserving computed max values and existing steps (protein step 5; veggies step 10; water step 0.1). Use shadcn-ui primitives (e.g., Button) for consistent styling; verify the component's usage instructions before implementing."
+          "description": "Replace blue–violet score/dial gradient helpers with gold/jade/emerald/turquoise equivalents used by Dashboard visuals (e.g., ScoreRing), keeping warning/destructive styling ruby-red."
         },
         {
-          "path": "frontend/src/components/StressCard.tsx",
+          "path": "frontend/src/pages/Dashboard.tsx",
           "operation": "modify",
-          "description": "Replace GradientSlider controls for systolic, diastolic, and pulse with modern non-slider controls (e.g., steppers), preserving min/max/step (80–180 step 1; 50–120 step 1; 40–150 step 1). Ensure the status indicator behavior and displayed values remain unchanged."
+          "description": "Apply the new palette consistently within the Dashboard page layout and section wrappers (background, panels, borders, highlights, interactive states) without changing existing computations, inputs, or mutations."
         },
         {
-          "path": "frontend/src/components/BodyCompositionCard.tsx",
+          "path": "frontend/src/components/ScoreRing.tsx",
           "operation": "modify",
-          "description": "Replace GradientSlider controls for weight, bodyFat, and muscleMass with modern non-slider controls (e.g., steppers with optional quick chips), preserving min/max/step (weight 30–200 step 0.1; body fat 5–50 step 0.1; muscle mass 10–100 step 0.1). Ensure BMI display and category coloring remain unchanged."
+          "description": "Update ScoreRing visuals to use the new gold/jade/emerald/turquoise palette (remove blue–violet gradients) while keeping current data flow and behavior unchanged."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Use the existing ChronographDial circular control for at least two routine inputs where it best matches the dashboard aesthetic.",
+      "summary": "Add a subtle animated gold energy background overlay (slow caustics/light-ray drift) on the Dashboard only, behind all content with pointer-events disabled.",
       "acceptanceCriteria": [
-        "At least two routine inputs use ChronographDial as the primary control (e.g., fastingHours and sleepQuality, or pulse and sleepQuality).",
-        "Dial interactions work with both mouse and touch, and values snap to the configured step (matching current slider steps).",
-        "The dial control displays an English label and unit (if applicable) and visually aligns with the existing glass/luxury theme (spacing, typography, colors)."
+        "A low-opacity animated overlay is visible behind Dashboard content and does not interfere with scrolling or clicking (pointer-events disabled).",
+        "The animation is subtle (slow drift, no rapid flashing) and performance-safe (no heavy JS animation loops required).",
+        "The effect is only present on Dashboard (or is safely reusable elsewhere without breaking other pages)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/FastingTimer.tsx",
+          "path": "frontend/src/pages/Dashboard.tsx",
           "operation": "modify",
-          "description": "Integrate the existing ChronographDial component as the primary control for fastingHours with min 0, max 24, step 0.5, an English label, and an 'h' unit. Ensure touch + mouse dragging works and value snaps correctly; visually match existing glass/luxury styling."
+          "description": "Add fixed, pointer-events-none background overlay layers behind Dashboard content that render the generated textures and remain isolated to the Dashboard view."
         },
         {
-          "path": "frontend/src/components/SleepCard.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Integrate the existing ChronographDial component as the primary control for sleepQuality with min 0, max 10, step 1, an English label, and '/10' or unitless display consistent with the card. Ensure touch + mouse dragging works and value snaps correctly; visually match existing glass/luxury styling."
+          "description": "Create/update CSS utility classes and keyframes for the subtle drift animation and low-opacity overlay styling using the generated asset frontend/public/assets/generated/gold-caustics-overlay.dim_2400x1350.png and the depth layer frontend/public/assets/generated/premium-bokeh-overlay.dim_2400x1350.png."
         },
         {
-          "path": "frontend/src/components/ChronographDial.tsx",
-          "operation": "modify",
-          "description": "Refine ChronographDial to better align with the dashboard glass/luxury theme and ensure step snapping + pointer interaction feel consistent (mouse/touch). Keep behavior compatible with current callers (no breaking prop changes unless updated across all usages)."
+          "path": "frontend/public/assets/generated/gold-caustics-overlay.dim_2400x1350.png",
+          "operation": "create",
+          "description": "Add the required generated asset to the public assets folder and wire it into the Dashboard overlay styling."
+        },
+        {
+          "path": "frontend/public/assets/generated/premium-bokeh-overlay.dim_2400x1350.png",
+          "operation": "create",
+          "description": "Add the required generated asset to the public assets folder and wire it into the Dashboard overlay styling."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Introduce stepper and segmented/chip-style inputs to replace sliders for remaining routine fields, selecting appropriate control types per metric.",
+      "summary": "Present routine sections on the Dashboard as futuristic glass ‘Energy Capsules’ with completion-based upward fill and glow that intensifies with completion, supporting at least gold and jade accent modes.",
       "acceptanceCriteria": [
-        "StressCard uses non-slider controls for systolic/diastolic/pulse (e.g., stepper +/- with direct numeric display) and still computes and displays the same status indicator behavior.",
-        "NutritionCard replaces sliders with modern controls (e.g., stepper for grams/liters plus optional preset chips like common increments), while preserving current computed targets and displayed values.",
-        "BodyCompositionCard replaces sliders with modern controls (e.g., steppers and/or compact dial), while BMI display and category coloring remain correct and unchanged.",
-        "All newly introduced user-facing strings for these new controls are in English (do not add new German strings)."
+        "Each routine section is presented inside an EnergyCapsule-like container with glass styling and a completion fill animation tied to the existing completion computations in Dashboard.",
+        "Completion fill animates smoothly (no jump cuts) when values change, and the glow becomes more noticeable at higher completion (e.g., >70%).",
+        "EnergyCapsule supports at least two accent modes (e.g., gold for highlights and jade for health-related sections) and the chosen accent is reflected in fill/glow styling."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/StepperInput.tsx",
-          "operation": "create",
-          "description": "Create a reusable StepperInput primitive for precise numeric adjustments (min/max/step, +/- buttons, optional press-and-hold acceleration, disabled states). Compose shadcn-ui components (e.g., Button) for styling and accessibility; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/ChipsInput.tsx",
-          "operation": "create",
-          "description": "Create a reusable chip/preset input primitive for common increments/presets (e.g., +0.5h, +250ml), styled to match the dashboard glass/luxury theme. Compose shadcn-ui components (e.g., Button) for consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/StressCard.tsx",
+          "path": "frontend/src/components/EnergyCapsule.tsx",
           "operation": "modify",
-          "description": "Replace the three GradientSlider controls with StepperInput-based controls (and optional quick chips), keeping the same min/max/step ranges and ensuring the existing ColorIndicator-derived status block remains unchanged."
+          "description": "Implement completion-driven fill via CSS variable (e.g., --fill-height) and apply accentMode classes (gold/jade) so fill + glow styling changes by mode while preserving existing child content rendering."
         },
         {
-          "path": "frontend/src/components/NutritionCard.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Replace protein/veggie/water sliders with StepperInput + optional ChipsInput presets (e.g., common increments) while preserving current computed targets, displayed values, and step precision. Ensure any new labels/help text are English."
+          "description": "Update/extend Energy Capsule utility styles to provide glass capsule styling, smooth upward fill transition, and completion-based glow (stronger above ~70%), including separate gold and jade accent variants."
         },
         {
-          "path": "frontend/src/components/BodyCompositionCard.tsx",
+          "path": "frontend/src/pages/Dashboard.tsx",
           "operation": "modify",
-          "description": "Replace weight/body fat/muscle mass sliders with StepperInput (and optional ChipsInput for common deltas) while preserving min/max/step and maintaining BMI calculation display and category coloring exactly as before."
+          "description": "Wrap each existing routine section (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements) in EnergyCapsule and map each to an appropriate accentMode (e.g., jade for health metrics, emerald/turquoise for nutrition/water, gold for highlights) using the existing completion computations already present in Dashboard."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Ensure redesigned inputs are consistent and reusable via shared UI primitives and subtle motion across routine cards without touching immutable auth-related hooks/paths.",
+      "summary": "Upgrade the Dashboard score area into a ‘portal’ effect: subtle pulse, gold shimmer contours, and a thin rotating spark ring around the score visualization without layout shift.",
       "acceptanceCriteria": [
-        "A small set of reusable input components (e.g., StepperInput, SegmentedControl/Chips) is used across multiple routine cards instead of duplicating ad-hoc UI per card.",
-        "Value changes animate subtly (e.g., number transitions or soft highlight) and do not degrade dashboard readability or performance.",
-        "No changes are made to the Internet Identity hooks or other immutable frontend paths."
+        "The score ring visibly pulses subtly and uses gold shimmer accents rather than blue–violet gradients.",
+        "A separate thin rotating spark ring (or equivalent subtle rotating spark effect) is rendered around the score visualization.",
+        "The effect does not reduce text readability and does not cause layout shift."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/FastingTimer.tsx",
+          "path": "frontend/src/components/ScoreRing.tsx",
           "operation": "modify",
-          "description": "Adopt shared input primitives/styling (where applicable) around the dial value readout (e.g., consistent label/value typography and subtle transitions) to match the rest of the redesigned routine inputs."
-        },
-        {
-          "path": "frontend/src/components/SleepCard.tsx",
-          "operation": "modify",
-          "description": "Use shared StepperInput/ChipsInput primitives for non-dial fields and apply consistent motion/interaction patterns (subtle value transition/highlight) matching the dashboard theme."
-        },
-        {
-          "path": "frontend/src/components/NutritionCard.tsx",
-          "operation": "modify",
-          "description": "Use shared StepperInput/ChipsInput primitives (no bespoke per-card controls) and apply consistent motion/interaction patterns and typography."
-        },
-        {
-          "path": "frontend/src/components/StressCard.tsx",
-          "operation": "modify",
-          "description": "Use shared StepperInput (and optional ChipsInput) primitives and apply consistent subtle value transition/highlight while keeping the status indicator readable."
-        },
-        {
-          "path": "frontend/src/components/BodyCompositionCard.tsx",
-          "operation": "modify",
-          "description": "Use shared StepperInput/ChipsInput primitives and apply consistent subtle value transition/highlight while keeping BMI visuals unchanged."
+          "description": "Add portal visuals: gentle pulse on the ring container, gold shimmer on contours, and a separate thin rotating spark ring layer (CSS/SVG) positioned absolutely to avoid layout shift."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add small, reusable utility classes for subtle value-change transitions/highlights that fit the existing luxury/glass theme (avoid adding new global stylesheet files). Ensure performance-friendly animations."
+          "description": "Add/adjust keyframes and utility classes for portal pulse, contour shimmer, and slow spark-ring rotation tuned for subtle motion and readability (no rapid flashing)."
+        },
+        {
+          "path": "frontend/src/utils/theme.ts",
+          "operation": "modify",
+          "description": "Ensure score color and background gradient helpers return gold-forward portal-friendly colors (and avoid blue–violet) so ScoreRing shimmer/contours match the new palette."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement the ‘Future Projection’ section on the Dashboard with exactly three panels (Biological Youth, Body Form, Energy & Focus), each showing a numeric value, trend indicator, and an elegant silhouette outline, using existing computed values only.",
+      "acceptanceCriteria": [
+        "Dashboard displays a clearly labeled 'Future Projection' section containing exactly the three requested areas with value + trend + silhouette visual.",
+        "Trend indicators are visually consistent with the new palette (e.g., positive in jade/emerald, negative in ruby/destructive, neutral muted).",
+        "The section remains fully functional with existing computed values and does not require new backend data."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FutureProjectionSection.tsx",
+          "operation": "modify",
+          "description": "Refine Future Projection panels to match the premium palette, ensure exactly the three requested panels, and update trend indicator coloring (positive jade/emerald, negative destructive/ruby, neutral muted) while keeping the existing German/English behavior."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Place the FutureProjectionSection in a dedicated, clearly separated Dashboard block (above the routine grid or equivalent) using the already computed biologicalAge/bodyForm/energyFocus and trends (no new backend data)."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update Future Projection panel styling utilities for premium glass depth and palette-consistent borders/highlights, and ensure the silhouette outline blends elegantly without harming readability."
+        },
+        {
+          "path": "frontend/public/assets/generated/future-silhouette-outline.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the required generated asset to the public assets folder and ensure FutureProjectionSection renders it from frontend/public/assets/generated/future-silhouette-outline.dim_512x512.png."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add minimal, high-impact micro-animations to Dashboard interactions: smoother sliders, supplement completion wipe highlight, and a brief energy pulse on training save—without changing workflows or adding popups.",
+      "acceptanceCriteria": [
+        "Sliders on Dashboard use smooth transitions (track/thumb/value changes feel continuous) without causing input lag.",
+        "Toggling a supplement completion triggers a subtle wipe/highlight animation on the affected list item.",
+        "When a training save action occurs, the training area shows a brief pulse animation and returns to normal automatically."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/GradientSlider.tsx",
+          "operation": "modify",
+          "description": "Improve perceived slider fluidity by adding lightweight CSS transitions for visual track/thumb/value updates (no heavy JS animation loops) while preserving current onChange behavior and responsiveness."
+        },
+        {
+          "path": "frontend/src/components/SupplementCard.tsx",
+          "operation": "modify",
+          "description": "Add a local UI-only animation trigger that applies the existing wipe/highlight class to the toggled supplement row when completion changes; keep all existing supplement mutations and language strings intact."
+        },
+        {
+          "path": "frontend/src/components/TrainingCard.tsx",
+          "operation": "modify",
+          "description": "Add a UI-only pulse trigger hook/prop and apply a brief pulse class to the training section container upon successful save, without altering the training save workflow or backend calls."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Wire micro-animations into Dashboard interactions by passing any needed callbacks/flags to TrainingCard and ensuring slider/supplement interactions remain functionally unchanged."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Retune micro-animation CSS to the new premium palette (wipe highlight tint, training pulse glow color) and ensure animations are subtle, brief, and accessibility-friendly."
         }
       ]
     }

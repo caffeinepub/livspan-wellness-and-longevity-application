@@ -502,80 +502,24 @@ export default function Dashboard() {
       };
 
       await completeRoutinesMutation.mutateAsync(routines);
-
-      await saveBodyCompositionMutation.mutateAsync({
-        weight,
-        bodyFat,
-        muscleMass,
-      });
-
-      setFastingHours(0);
-      setTrainingSessions([]);
-      setProteinIntake(0);
-      setVeggieIntake(0);
-      setWaterIntake(0);
-      setSleepDuration(0);
-      setSleepQuality(0);
-      setSystolic(120);
-      setDiastolic(80);
-      setPulse(70);
-      setSupplementCompletions({});
-
-      localStorage.removeItem('fastingHours');
-      localStorage.removeItem('trainingSessions');
-      localStorage.removeItem('proteinIntake');
-      localStorage.removeItem('veggieIntake');
-      localStorage.removeItem('waterIntake');
-      localStorage.removeItem('sleepDuration');
-      localStorage.removeItem('sleepQuality');
-      localStorage.removeItem('systolic');
-      localStorage.removeItem('diastolic');
-      localStorage.removeItem('pulse');
-      localStorage.removeItem('supplementCompletions');
-
+      setShowRoutineSavedModal(true);
+      
       toast.success(
-        isGerman 
-          ? 'Tägliche Routine gespeichert! 10 LIV Token verdient.' 
-          : 'Daily routine saved! Earned 10 LIV tokens.'
+        isGerman ? 'Routine erfolgreich gespeichert!' : 'Routine saved successfully!',
+        {
+          description: isGerman 
+            ? 'Deine tägliche Routine wurde erfolgreich gespeichert.' 
+            : 'Your daily routine has been saved successfully.',
+        }
       );
     } catch (error: any) {
-      if (error.message && (
-        error.message.includes('Routine already completed today') ||
-        error.message.includes('already completed')
-      )) {
-        setShowRoutineSavedModal(true);
-      } else {
-        toast.error(
-          isGerman 
-            ? 'Fehler beim Speichern der Routine' 
-            : 'Error saving routine'
-        );
-      }
-      console.error('Error completing routines:', error);
-    }
-  };
-
-  const handleSaveTrainings = async () => {
-    try {
-      for (const training of trainingSessions) {
-        await saveTrainingMutation.mutateAsync(training);
-      }
-      toast.success('Training sessions saved successfully');
-    } catch (error) {
-      toast.error('Error saving training sessions');
-      console.error('Error saving trainings:', error);
-    }
-  };
-
-  const handleClearTrainings = async () => {
-    try {
-      await clearTrainingsMutation.mutateAsync();
-      setTrainingSessions([]);
-      localStorage.removeItem('trainingSessions');
-      toast.success('Training sessions cleared');
-    } catch (error) {
-      toast.error('Error clearing training sessions');
-      console.error('Error clearing trainings:', error);
+      console.error('Error saving routine:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Speichern' : 'Error saving routine',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
     }
   };
 
@@ -583,17 +527,19 @@ export default function Dashboard() {
     try {
       await addSupplementMutation.mutateAsync({ name, dosage, time, note });
       toast.success(
-        isGerman 
-          ? 'Supplement hinzugefügt' 
-          : 'Supplement added'
+        isGerman ? 'Supplement hinzugefügt' : 'Supplement added',
+        {
+          description: isGerman ? `${name} wurde hinzugefügt` : `${name} has been added`,
+        }
       );
-    } catch (error) {
-      toast.error(
-        isGerman 
-          ? 'Fehler beim Hinzufügen des Supplements' 
-          : 'Error adding supplement'
-      );
+    } catch (error: any) {
       console.error('Error adding supplement:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Hinzufügen' : 'Error adding supplement',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
     }
   };
 
@@ -601,40 +547,39 @@ export default function Dashboard() {
     try {
       await updateSupplementMutation.mutateAsync({ supplementId, name, dosage, time, note });
       toast.success(
-        isGerman 
-          ? 'Supplement aktualisiert' 
-          : 'Supplement updated'
+        isGerman ? 'Supplement aktualisiert' : 'Supplement updated',
+        {
+          description: isGerman ? `${name} wurde aktualisiert` : `${name} has been updated`,
+        }
       );
-    } catch (error) {
-      toast.error(
-        isGerman 
-          ? 'Fehler beim Aktualisieren des Supplements' 
-          : 'Error updating supplement'
-      );
+    } catch (error: any) {
       console.error('Error updating supplement:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Aktualisieren' : 'Error updating supplement',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
     }
   };
 
   const handleDeleteSupplement = async (supplementId: bigint) => {
     try {
       await deleteSupplementMutation.mutateAsync(supplementId);
-      setSupplementCompletions(prev => {
-        const newState = { ...prev };
-        delete newState[supplementId.toString()];
-        return newState;
-      });
       toast.success(
-        isGerman 
-          ? 'Supplement gelöscht' 
-          : 'Supplement deleted'
+        isGerman ? 'Supplement gelöscht' : 'Supplement deleted',
+        {
+          description: isGerman ? 'Das Supplement wurde gelöscht' : 'The supplement has been deleted',
+        }
       );
-    } catch (error) {
-      toast.error(
-        isGerman 
-          ? 'Fehler beim Löschen des Supplements' 
-          : 'Error deleting supplement'
-      );
+    } catch (error: any) {
       console.error('Error deleting supplement:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Löschen' : 'Error deleting supplement',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
     }
   };
 
@@ -642,272 +587,266 @@ export default function Dashboard() {
     const idStr = id.toString();
     setSupplementCompletions(prev => ({
       ...prev,
-      [idStr]: !prev[idStr]
+      [idStr]: !prev[idStr],
     }));
   };
 
+  const handleSaveTrainings = async () => {
+    try {
+      for (const training of trainingSessions) {
+        await saveTrainingMutation.mutateAsync(training);
+      }
+      toast.success(
+        isGerman ? 'Training gespeichert' : 'Training saved',
+        {
+          description: isGerman ? 'Deine Trainingseinheiten wurden gespeichert' : 'Your training sessions have been saved',
+        }
+      );
+    } catch (error: any) {
+      console.error('Error saving trainings:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Speichern' : 'Error saving training',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
+    }
+  };
+
+  const handleClearTrainings = async () => {
+    try {
+      await clearTrainingsMutation.mutateAsync();
+      setTrainingSessions([]);
+      localStorage.setItem('trainingSessions', JSON.stringify([]));
+      toast.success(
+        isGerman ? 'Training gelöscht' : 'Training cleared',
+        {
+          description: isGerman ? 'Alle Trainingseinheiten wurden gelöscht' : 'All training sessions have been cleared',
+        }
+      );
+    } catch (error: any) {
+      console.error('Error clearing trainings:', error);
+      toast.error(
+        isGerman ? 'Fehler beim Löschen' : 'Error clearing training',
+        {
+          description: error.message || (isGerman ? 'Ein Fehler ist aufgetreten' : 'An error occurred'),
+        }
+      );
+    }
+  };
+
+  // Map coaching insight types to SmartInsight types
+  const mapInsightType = (type: string): 'fasting' | 'sleep' | 'hydration' | 'recovery' => {
+    if (type === 'warning' || type === 'tip') return 'recovery';
+    if (type === 'praise' || type === 'trend') return 'fasting';
+    return 'fasting';
+  };
+
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-bold mb-2 luxury-text-gold">
-            {isGerman ? 'Luxury Health Coach' : 'Luxury Health Coach'}
-          </h1>
-          <p className="text-muted-foreground">
-            {isGerman 
-              ? 'Ihr persönlicher Premium-Gesundheitscoach für optimale Langlebigkeit' 
-              : 'Your personal premium health coach for optimal longevity'}
-          </p>
-        </div>
-
-        <div className="mb-8">
-          <DailyCoachingCard 
-            steps={coachingSteps} 
-            insights={coachingInsights}
-            isGerman={isGerman}
-          />
-        </div>
-
+    <div className="min-h-screen relative">
+      {/* Animated gold caustics overlay */}
+      <div className="gold-caustics-overlay" />
+      <div className="bokeh-overlay" />
+      
+      <div className="relative z-10 container mx-auto px-4 py-8 space-y-8">
+        {/* Future Projection Section */}
         <FutureProjectionSection
           biologicalAge={biologicalAge}
-          biologicalAgeTrend={getTrend(biologicalAge, [])}
+          biologicalAgeTrend={getTrend(biologicalAge, autophagyTrendData)}
           bodyForm={bodyForm}
-          bodyFormTrend={getTrend(bodyForm, [])}
+          bodyFormTrend={getTrend(bodyForm, longevityTrendData)}
           energyFocus={energyFocus}
-          energyFocusTrend={getTrend(energyFocus, [])}
+          energyFocusTrend={getTrend(energyFocus, autophagyTrendData)}
           isGerman={isGerman}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="relative cockpit-data-panel">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => setShowAutophagyInfo(true)}
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background border border-luxury-gold/20 hover:border-luxury-gold/50"
-                  >
-                    <Info className="h-5 w-5 text-luxury-gold" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{isGerman ? 'Autophagie-Score Details' : 'Autophagy Score Details'}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+        {/* Daily Coaching Card */}
+        <DailyCoachingCard
+          steps={coachingSteps}
+          insights={coachingInsights}
+          isGerman={isGerman}
+        />
+
+        {/* Score Rings Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="cockpit-data-panel flex flex-col items-center justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <img 
+                src="/assets/generated/autophagy-icon-transparent.dim_64x64.png" 
+                alt="Autophagy" 
+                className="h-10 w-10 drop-shadow-md" 
+              />
+              <h3 className="text-xl font-bold luxury-text-gold">
+                {isGerman ? 'Autophagie Score' : 'Autophagy Score'}
+              </h3>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setShowAutophagyInfo(true)}
+                      className="ml-2 text-muted-foreground hover:text-luxury-gold transition-colors"
+                    >
+                      <Info className="h-5 w-5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isGerman ? 'Mehr Informationen' : 'More information'}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <ScoreRing
               score={autophagyScoreData.totalScore}
-              label={isGerman ? 'Autophagie-Score' : 'Autophagy Score'}
-              description={isGerman ? 'Zellerneuerung' : 'Cell Renewal'}
-              icon="/assets/generated/autophagy-icon-transparent.dim_64x64.png"
-              trendData={autophagyTrendData}
-            />
-            <SmartInsightsOverlay
-              score={autophagyScoreData.totalScore}
-              scoreType="autophagy"
-              isGerman={isGerman}
+              label={isGerman ? 'Zellerneuerung' : 'Cell Renewal'}
             />
           </div>
-          <div className="relative cockpit-data-panel">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background border border-luxury-gold/20 hover:border-luxury-gold/50"
-                  >
-                    <Info className="h-5 w-5 text-luxury-gold" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{isGerman ? 'Langlebigkeits-Score Details' : 'Longevity Score Details'}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {isGerman 
-                      ? 'Körperzusammensetzung 50%, Ernährung 30%, Autophagie 20%' 
-                      : 'Body Composition 50%, Nutrition 30%, Autophagy 20%'}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+
+          <div className="cockpit-data-panel flex flex-col items-center justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <img 
+                src="/assets/generated/longevity-icon-transparent.dim_64x64.png" 
+                alt="Longevity" 
+                className="h-10 w-10 drop-shadow-md" 
+              />
+              <h3 className="text-xl font-bold luxury-text-gold">
+                {isGerman ? 'Langlebigkeits Score' : 'Longevity Score'}
+              </h3>
+            </div>
             <ScoreRing
               score={longevityScore}
-              label={isGerman ? 'Langlebigkeits-Score' : 'Longevity Score'}
-              description={isGerman ? 'Gesundheitsstatus' : 'Health Status'}
-              icon="/assets/generated/longevity-icon-transparent.dim_64x64.png"
-              trendData={longevityTrendData}
-            />
-            <SmartInsightsOverlay
-              score={longevityScore}
-              scoreType="longevity"
-              isGerman={isGerman}
+              label={isGerman ? 'Gesundheitsstatus' : 'Health Status'}
             />
           </div>
         </div>
 
-        <EnergyCapsule completion={bodyCompCompletion} className="mb-8 p-6">
-          <BodyCompositionCard
-            isGerman={isGerman}
-            weight={weight}
-            bodyFat={bodyFat}
-            muscleMass={muscleMass}
-            bmi={currentBMI}
-            bmiCategory={currentBMICategory}
-            onWeightChange={handleWeightChange}
-            onBodyFatChange={handleBodyFatChange}
-            onMuscleMassChange={handleMuscleMassChange}
-          />
-        </EnergyCapsule>
+        {/* Routine Sections in Energy Capsules */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <EnergyCapsule completion={fastingCompletion} accentMode="gold">
+            <FastingTimer
+              fastingHours={fastingHours}
+              onFastingDurationChange={setFastingHours}
+            />
+          </EnergyCapsule>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="space-y-4">
-            <EnergyCapsule completion={fastingCompletion}>
-              <div className="p-6">
-                <FastingTimer
-                  fastingHours={fastingHours}
-                  onFastingDurationChange={setFastingHours}
-                />
-              </div>
-            </EnergyCapsule>
-            {fastingHours < 12 && (
-              <SmartInsight
-                type="fasting"
-                isGerman={isGerman}
-                message={
-                  isGerman
-                    ? 'Tipp: Versuchen Sie, mindestens 16 Stunden zu fasten, um die Autophagie zu aktivieren.'
-                    : 'Tip: Try to fast for at least 16 hours to activate autophagy.'
-                }
-              />
-            )}
-          </div>
-          
-          <EnergyCapsule completion={trainingCompletion}>
-            <div className="p-6">
-              <TrainingCard
-                isGerman={isGerman}
-                trainingSessions={trainingSessions}
-                onTrainingSessionsChange={setTrainingSessions}
-                onSaveTrainings={handleSaveTrainings}
-                onClearTrainings={handleClearTrainings}
-                isSaving={saveTrainingMutation.isPending}
-                isLoading={trainingsLoading}
-              />
-            </div>
+          <EnergyCapsule completion={trainingCompletion} accentMode="jade">
+            <TrainingCard
+              isGerman={isGerman}
+              trainingSessions={trainingSessions}
+              onTrainingSessionsChange={setTrainingSessions}
+              onSaveTrainings={handleSaveTrainings}
+              onClearTrainings={handleClearTrainings}
+              isSaving={saveTrainingMutation.isPending}
+              isLoading={clearTrainingsMutation.isPending}
+            />
           </EnergyCapsule>
-          
-          <div className="space-y-4">
-            <EnergyCapsule completion={sleepCompletion}>
-              <div className="p-6">
-                <SleepCard
-                  isGerman={isGerman}
-                  sleepDuration={sleepDuration}
-                  sleepQuality={sleepQuality}
-                  onSleepDurationChange={setSleepDuration}
-                  onSleepQualityChange={setSleepQuality}
-                />
-              </div>
-            </EnergyCapsule>
-            {(sleepDuration < 7 || sleepQuality < 6) && (
-              <SmartInsight
-                type="sleep"
-                isGerman={isGerman}
-                message={
-                  isGerman
-                    ? 'Tipp: 7-9 Stunden qualitativ hochwertiger Schlaf sind optimal für die Regeneration.'
-                    : 'Tip: 7-9 hours of quality sleep is optimal for recovery.'
-                }
-              />
-            )}
-          </div>
-          
-          <EnergyCapsule completion={stressCompletion}>
-            <div className="p-6">
-              <StressCard
-                isGerman={isGerman}
-                systolic={systolic}
-                diastolic={diastolic}
-                pulse={pulse}
-                onSystolicChange={setSystolic}
-                onDiastolicChange={setDiastolic}
-                onPulseChange={setPulse}
-              />
-            </div>
+
+          <EnergyCapsule completion={sleepCompletion} accentMode="jade">
+            <SleepCard
+              isGerman={isGerman}
+              sleepDuration={sleepDuration}
+              sleepQuality={sleepQuality}
+              onSleepDurationChange={setSleepDuration}
+              onSleepQualityChange={setSleepQuality}
+            />
           </EnergyCapsule>
-          
-          <div className="space-y-4">
-            <EnergyCapsule completion={nutritionCompletion}>
-              <div className="p-6">
-                <NutritionCard
-                  isGerman={isGerman}
-                  proteinIntake={proteinIntake}
-                  proteinTarget={calculateProteinTarget()}
-                  veggieIntake={veggieIntake}
-                  waterIntake={waterIntake}
-                  onProteinChange={setProteinIntake}
-                  onVeggieChange={setVeggieIntake}
-                  onWaterChange={setWaterIntake}
-                />
-              </div>
-            </EnergyCapsule>
-            {waterIntake < 1.5 && (
-              <SmartInsight
-                type="hydration"
-                isGerman={isGerman}
-                message={
-                  isGerman
-                    ? 'Tipp: Trinken Sie mindestens 2 Liter Wasser täglich für optimale Hydration.'
-                    : 'Tip: Drink at least 2 liters of water daily for optimal hydration.'
-                }
-              />
-            )}
-          </div>
+
+          <EnergyCapsule completion={stressCompletion} accentMode="jade">
+            <StressCard
+              isGerman={isGerman}
+              systolic={systolic}
+              diastolic={diastolic}
+              pulse={pulse}
+              onSystolicChange={setSystolic}
+              onDiastolicChange={setDiastolic}
+              onPulseChange={setPulse}
+            />
+          </EnergyCapsule>
+
+          <EnergyCapsule completion={nutritionCompletion} accentMode="emerald">
+            <NutritionCard
+              isGerman={isGerman}
+              proteinIntake={proteinIntake}
+              veggieIntake={veggieIntake}
+              waterIntake={waterIntake}
+              proteinTarget={calculateProteinTarget()}
+              onProteinChange={setProteinIntake}
+              onVeggieChange={setVeggieIntake}
+              onWaterChange={setWaterIntake}
+            />
+          </EnergyCapsule>
+
+          <EnergyCapsule completion={bodyCompCompletion} accentMode="jade">
+            <BodyCompositionCard
+              isGerman={isGerman}
+              weight={weight}
+              bodyFat={bodyFat}
+              muscleMass={muscleMass}
+              bmi={currentBMI}
+              bmiCategory={currentBMICategory}
+              onWeightChange={handleWeightChange}
+              onBodyFatChange={handleBodyFatChange}
+              onMuscleMassChange={handleMuscleMassChange}
+            />
+          </EnergyCapsule>
+
+          <EnergyCapsule completion={supplementCompletion} accentMode="emerald" className="lg:col-span-2">
+            <SupplementCard
+              isGerman={isGerman}
+              supplements={supplements}
+              supplementCompletions={supplementCompletions}
+              onAddSupplement={handleAddSupplement}
+              onUpdateSupplement={handleUpdateSupplement}
+              onDeleteSupplement={handleDeleteSupplement}
+              onToggleSupplement={handleToggleSupplement}
+            />
+          </EnergyCapsule>
         </div>
 
-        <EnergyCapsule completion={supplementCompletion} className="mb-8 p-6">
-          <SupplementCard
-            isGerman={isGerman}
-            supplements={supplements}
-            supplementCompletions={supplementCompletions}
-            onAddSupplement={handleAddSupplement}
-            onUpdateSupplement={handleUpdateSupplement}
-            onDeleteSupplement={handleDeleteSupplement}
-            onToggleSupplement={handleToggleSupplement}
-          />
-        </EnergyCapsule>
+        {/* Smart Insights */}
+        {coachingInsights.length > 0 && (
+          <div className="space-y-4">
+            {coachingInsights.map((insight, index) => (
+              <SmartInsight
+                key={index}
+                type={mapInsightType(insight.type)}
+                isGerman={isGerman}
+                message={insight.message}
+              />
+            ))}
+          </div>
+        )}
 
-        <div className="flex justify-center mb-8">
+        {/* Save Routine Button */}
+        <div className="flex justify-center pt-8">
           <Button
-            size="lg"
             onClick={handleSaveRoutine}
             disabled={completeRoutinesMutation.isPending}
-            className="min-w-[300px] shadow-glow-gold hover:shadow-glow-lg cockpit-button luxury-gradient-gold luxury-border-gold"
+            size="lg"
+            className="px-12 py-6 text-lg font-bold bg-luxury-gold hover:bg-luxury-gold-bright text-black transition-all duration-200 hover:scale-105 shadow-glow-gold"
           >
             {completeRoutinesMutation.isPending
               ? (isGerman ? 'Speichern...' : 'Saving...')
-              : (isGerman ? 'Tägliche Routine speichern' : 'Save Daily Routine')}
+              : (isGerman ? 'Routine Speichern' : 'Save Routine')}
           </Button>
         </div>
       </div>
 
+      {/* Modals */}
       <Dialog open={showRoutineSavedModal} onOpenChange={setShowRoutineSavedModal}>
-        <DialogContent className="glass-panel sm:max-w-md">
+        <DialogContent>
           <DialogHeader>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-full bg-yellow-500/10">
-                <AlertCircle className="h-6 w-6 text-yellow-500" />
-              </div>
-              <DialogTitle className="text-xl">
-                {isGerman ? 'Routine bereits gespeichert' : 'Routine Already Saved'}
-              </DialogTitle>
-            </div>
-            <DialogDescription className="text-base pt-2">
-              {isGerman 
-                ? 'Tägliche Routine wurde heute bereits gespeichert. Sie können Ihre Routine nur einmal pro Tag speichern.' 
-                : 'Daily routine has already been saved for today. You can only save your daily routine once per calendar day.'}
+            <DialogTitle className="luxury-text-gold">
+              {isGerman ? 'Routine Gespeichert!' : 'Routine Saved!'}
+            </DialogTitle>
+            <DialogDescription>
+              {isGerman
+                ? 'Deine tägliche Routine wurde erfolgreich gespeichert. Deine LIV Tokens wurden gutgeschrieben.'
+                : 'Your daily routine has been saved successfully. Your LIV tokens have been credited.'}
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-end mt-4">
-            <Button onClick={() => setShowRoutineSavedModal(false)}>
-              {isGerman ? 'Verstanden' : 'Understood'}
+          <div className="flex justify-end">
+            <Button onClick={() => setShowRoutineSavedModal(false)} className="bg-luxury-gold hover:bg-luxury-gold-bright text-black">
+              {isGerman ? 'Schließen' : 'Close'}
             </Button>
           </div>
         </DialogContent>

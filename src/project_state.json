@@ -1,42 +1,57 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project to redesign routine input controls to match the dashboard look, replacing sliders with more modern UI components across all routines.",
-  "architectural_notes": [
-    "Routine input components should align with dashboard visual design; replace sliders with alternative controls (e.g., stepper, segmented control, chips, toggles, dial, wheel picker) depending on routine type."
-  ],
+  "summary": "Dashboard/UI-Redesign mit goldenem Premium-Look, glasartigen Routine-Kacheln, animiertem Score-Ring und einem „Future Projection Layer“ zur Zukunftsvisualisierung der Routinen.",
+  "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Abstract gold caustics light-ray overlay texture, seamless/cover-ready (gold-caustics-overlay.dim_2400x1350.png)\n- Elegant futuristic human silhouette outline, minimal line art on transparent background (future-silhouette-outline.dim_512x512.png)\n- Soft premium bokeh overlay texture with warm gold highlights on dark background (luxury-bokeh-overlay.dim_2400x1350.png)",
   "existing_features": [
     {
-      "id": "feature-replace-slider-based-inputs-across-all-routine-cards-with-modern-dashboard-matching-input-controls-avoid-classic-horizontal-sliders-while-keeping-the-same-underlying-numeric-ranges-steps-and-preserving-existing-state-updates-localstorage-behavior",
-      "title": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+      "id": "feature-update-the-dashboard-visual-theme-to-a-premium-gold-dark-jade-emerald-turquoise-palette-with-ruby-red-reserved-for-warnings-and-apply-it-consistently-across-dashboard-surfaces-background-cards-panels-borders-highlights-icons-and-interactive-states-while-keeping-all-existing-functionality-unchanged",
+      "title": "Update the Dashboard visual theme to a premium gold + dark jade + emerald/turquoise palette with ruby-red reserved for warnings, and apply it consistently across Dashboard surfaces (background, cards/panels, borders, highlights, icons, and interactive states) while keeping all existing functionality unchanged.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-and-apply-a-dial-based-input-using-the-existing-chronographdial-component-for-routine-values-where-a-circular-control-better-matches-the-dashboard-aesthetic-and-integrate-it-into-the-relevant-routine-cards",
-      "title": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+      "id": "feature-implement-a-subtle-animated-gold-energy-source-background-for-the-dashboard-keep-the-gold-background-visually-static-overall-but-add-a-barely-noticeable-caustics-light-ray-drift-effect-e-g-a-fixed-full-screen-overlay-layer-with-very-low-opacity-and-slow-movement",
+      "title": "Implement a subtle animated 'gold energy source' background for the Dashboard: keep the gold background visually static overall but add a barely noticeable caustics/light-ray drift effect (e.g., a fixed full-screen overlay layer with very low opacity and slow movement).",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-stepper-and-segmented-chip-style-inputs-as-slider-replacements-for-the-remaining-routine-fields-choosing-control-types-that-match-the-earlier-recommendations-e-g-steppers-for-precise-numeric-vitals-and-body-composition-segmented-chips-for-qualitative-ratings-and-update-the-affected-routine-components-accordingly",
-      "title": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+      "id": "feature-redesign-routine-sections-on-the-dashboard-as-futuristic-semi-transparent-glass-energy-capsules-with-a-soft-glow-using-completion-based-fill-that-visually-fills-upward-as-the-routine-is-completed-fasting-sleep-training-nutrition-body-metrics-supplements",
+      "title": "Redesign routine sections on the Dashboard as futuristic semi-transparent glass 'Energy Capsules' with a soft glow, using completion-based fill that visually fills upward as the routine is completed (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements).",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-the-redesigned-routine-inputs-remain-consistent-and-reusable-by-introducing-shared-ui-primitives-components-as-needed-and-applying-consistent-interaction-motion-across-routine-cards-smooth-value-transitions-no-jarring-jumps",
-      "title": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+      "id": "feature-upgrade-the-score-area-to-feel-like-a-portal-to-the-future-ensure-the-central-score-ring-has-a-gentle-pulse-a-gold-shimmer-on-contours-and-an-additional-thin-spark-ring-particle-circle-that-rotates-slowly-around-it-pure-css-svg-canvas-acceptable",
+      "title": "Upgrade the score area to feel like a 'portal to the future': ensure the central score ring has a gentle pulse, a gold shimmer on contours, and an additional thin spark ring/particle circle that rotates slowly around it (pure CSS/SVG/canvas acceptable).",
       "reqIds": [
         "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-future-projection-layer-as-a-dedicated-section-on-the-dashboard-either-above-the-main-routine-grid-or-in-a-clearly-separated-block-showing-three-panels-biological-youth-body-form-and-energy-focus-each-with-trend-indicator-numeric-value-and-a-small-elegant-silhouette-outline",
+      "title": "Implement the 'Future Projection Layer' as a dedicated section on the Dashboard (either above the main routine grid or in a clearly separated block), showing three panels: Biological Youth, Body Form, and Energy & Focus, each with trend indicator, numeric value, and a small elegant silhouette outline.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-minimal-but-impactful-micro-animations-across-dashboard-interactions-sliders-should-feel-fluid-supplement-completion-should-trigger-a-soft-wipe-highlight-and-saving-training-should-trigger-a-brief-energy-pulse-animation-without-adding-new-popups-or-changing-workflows",
+      "title": "Apply minimal-but-impactful micro-animations across Dashboard interactions: sliders should feel fluid, supplement completion should trigger a soft wipe highlight, and saving training should trigger a brief energy pulse animation (without adding new popups or changing workflows).",
+      "reqIds": [
+        "REQ-6"
       ],
       "version": 1
     }
@@ -44,12 +59,42 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Redesign routine input UI to match dashboard style, replacing sliders with recommended modern controls across all routines",
+      "summary": "Goldener Hintergrund als lebendige „Energiequelle“ mit subtiler, kaum sichtbarer Licht-/Strahlenbewegung",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Routinen als futuristische halbtransparente Glas-„Energie-Kapseln“ mit Glow und Füll-Animation bei Completion (Fasten, Schlaf, Training, Ernährung, Körperwerte, Supplements)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Score-Bereich als animierter Longevity/Autophagie-Ring (pulsierend) mit Gold-Schimmer und langsam rotierendem Funkenkreis",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "„Future Projection Layer“ im/über dem Dashboard: Visualisierung des Einflusses heutiger Routinen auf Zukunft (Biologische Jugend, Körperform, Energie & Fokus) inkl. Trends, Zahlen, Silhouette-Outline",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Premium Farb- und UI-Stilguide: Gold Highlights, dunkles Jadegrün für Health, Smaragd/Türkis für Wasser/Ernährung, Rubinrot nur für Warnungen, Glas-Layer + leichtes Bokeh",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Minimale aber wirkungsvolle UI-Animationen: fließende Slider, sanfter Wipe-Effekt für Supplements, kurzer Energie-Pulse beim Training-Speichern",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Redesign routine input controls to match the Dashboard style (replace sliders with modern alternatives)",
+  "projectName": "Premium gold dashboard redesign with animated energy background, energy capsules, portal score ring, and future projection layer",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

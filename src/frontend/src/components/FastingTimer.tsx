@@ -7,14 +7,6 @@ interface FastingTimerProps {
 }
 
 export default function FastingTimer({ fastingHours, onFastingDurationChange }: FastingTimerProps) {
-  // Gradient stops for fasting: red (0-12h) → yellow (12-16h) → green (16-24h)
-  const gradientStops = [
-    { position: 0, color: 'oklch(0.55 0.22 25)' }, // red
-    { position: 50, color: 'oklch(0.75 0.15 85)' }, // yellow
-    { position: 67, color: 'oklch(0.60 0.16 155)' }, // green start
-    { position: 100, color: 'oklch(0.65 0.14 175)' }, // turquoise end
-  ];
-
   return (
     <Card className="glass-panel shadow-glass">
       <CardHeader className="pb-3">
@@ -34,7 +26,6 @@ export default function FastingTimer({ fastingHours, onFastingDurationChange }: 
             label="Fasting Hours"
             unit="h"
             size={200}
-            gradientStops={gradientStops}
           />
         </div>
         <p className="text-center text-xs text-muted-foreground">

@@ -46,7 +46,7 @@ function RootComponent() {
   if (isInitializing) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-luxury-gold" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -68,7 +68,7 @@ function RootComponent() {
   if (profileLoading || !isFetched || disclaimerLoading || !disclaimerFetched) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-luxury-gold" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }

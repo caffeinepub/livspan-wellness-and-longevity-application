@@ -2,14 +2,14 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-slider-based-inputs-across-all-routine-cards-with-modern-dashboard-matching-input-controls-avoid-classic-horizontal-sliders-while-keeping-the-same-underlying-numeric-ranges-steps-and-preserving-existing-state-updates-localstorage-behavior",
-      "featureTitle": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+      "featureId": "feature-update-the-dashboard-visual-theme-to-a-premium-gold-dark-jade-emerald-turquoise-palette-with-ruby-red-reserved-for-warnings-and-apply-it-consistently-across-dashboard-surfaces-background-cards-panels-borders-highlights-icons-and-interactive-states-while-keeping-all-existing-functionality-unchanged",
+      "featureTitle": "Update the Dashboard visual theme to a premium gold + dark jade + emerald/turquoise palette with ruby-red reserved for warnings, and apply it consistently across Dashboard surfaces (background, cards/panels, borders, highlights, icons, and interactive states) while keeping all existing functionality unchanged.",
       "files": [
-        "frontend/src/components/BodyCompositionCard.tsx",
-        "frontend/src/components/FastingTimer.tsx",
-        "frontend/src/components/NutritionCard.tsx",
-        "frontend/src/components/SleepCard.tsx",
-        "frontend/src/components/StressCard.tsx"
+        "frontend/src/components/ScoreRing.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/Dashboard.tsx",
+        "frontend/src/utils/theme.ts",
+        "frontend/tailwind.config.js"
       ],
       "components": [
         "authorization@3.0.0",
@@ -27,12 +27,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-and-apply-a-dial-based-input-using-the-existing-chronographdial-component-for-routine-values-where-a-circular-control-better-matches-the-dashboard-aesthetic-and-integrate-it-into-the-relevant-routine-cards",
-      "featureTitle": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+      "featureId": "feature-implement-a-subtle-animated-gold-energy-source-background-for-the-dashboard-keep-the-gold-background-visually-static-overall-but-add-a-barely-noticeable-caustics-light-ray-drift-effect-e-g-a-fixed-full-screen-overlay-layer-with-very-low-opacity-and-slow-movement",
+      "featureTitle": "Implement a subtle animated 'gold energy source' background for the Dashboard: keep the gold background visually static overall but add a barely noticeable caustics/light-ray drift effect (e.g., a fixed full-screen overlay layer with very low opacity and slow movement).",
       "files": [
-        "frontend/src/components/ChronographDial.tsx",
-        "frontend/src/components/FastingTimer.tsx",
-        "frontend/src/components/SleepCard.tsx"
+        "frontend/src/index.css",
+        "frontend/src/pages/Dashboard.tsx"
       ],
       "components": [
         "authorization@3.0.0",
@@ -50,14 +49,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-stepper-and-segmented-chip-style-inputs-as-slider-replacements-for-the-remaining-routine-fields-choosing-control-types-that-match-the-earlier-recommendations-e-g-steppers-for-precise-numeric-vitals-and-body-composition-segmented-chips-for-qualitative-ratings-and-update-the-affected-routine-components-accordingly",
-      "featureTitle": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+      "featureId": "feature-redesign-routine-sections-on-the-dashboard-as-futuristic-semi-transparent-glass-energy-capsules-with-a-soft-glow-using-completion-based-fill-that-visually-fills-upward-as-the-routine-is-completed-fasting-sleep-training-nutrition-body-metrics-supplements",
+      "featureTitle": "Redesign routine sections on the Dashboard as futuristic semi-transparent glass 'Energy Capsules' with a soft glow, using completion-based fill that visually fills upward as the routine is completed (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements).",
       "files": [
-        "frontend/src/components/BodyCompositionCard.tsx",
-        "frontend/src/components/ChipsInput.tsx",
-        "frontend/src/components/NutritionCard.tsx",
-        "frontend/src/components/StepperInput.tsx",
-        "frontend/src/components/StressCard.tsx"
+        "frontend/src/components/EnergyCapsule.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/Dashboard.tsx"
       ],
       "components": [
         "authorization@3.0.0",
@@ -75,15 +72,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-redesigned-routine-inputs-remain-consistent-and-reusable-by-introducing-shared-ui-primitives-components-as-needed-and-applying-consistent-interaction-motion-across-routine-cards-smooth-value-transitions-no-jarring-jumps",
-      "featureTitle": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+      "featureId": "feature-upgrade-the-score-area-to-feel-like-a-portal-to-the-future-ensure-the-central-score-ring-has-a-gentle-pulse-a-gold-shimmer-on-contours-and-an-additional-thin-spark-ring-particle-circle-that-rotates-slowly-around-it-pure-css-svg-canvas-acceptable",
+      "featureTitle": "Upgrade the score area to feel like a 'portal to the future': ensure the central score ring has a gentle pulse, a gold shimmer on contours, and an additional thin spark ring/particle circle that rotates slowly around it (pure CSS/SVG/canvas acceptable).",
       "files": [
-        "frontend/src/components/BodyCompositionCard.tsx",
-        "frontend/src/components/FastingTimer.tsx",
-        "frontend/src/components/NutritionCard.tsx",
-        "frontend/src/components/SleepCard.tsx",
-        "frontend/src/components/StressCard.tsx",
-        "frontend/src/index.css"
+        "frontend/src/components/ScoreRing.tsx",
+        "frontend/src/index.css",
+        "frontend/src/utils/theme.ts"
       ],
       "components": [
         "authorization@3.0.0",
@@ -97,6 +91,54 @@
       ],
       "testIds": [
         "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-future-projection-layer-as-a-dedicated-section-on-the-dashboard-either-above-the-main-routine-grid-or-in-a-clearly-separated-block-showing-three-panels-biological-youth-body-form-and-energy-focus-each-with-trend-indicator-numeric-value-and-a-small-elegant-silhouette-outline",
+      "featureTitle": "Implement the 'Future Projection Layer' as a dedicated section on the Dashboard (either above the main routine grid or in a clearly separated block), showing three panels: Biological Youth, Body Form, and Energy & Focus, each with trend indicator, numeric value, and a small elegant silhouette outline.",
+      "files": [
+        "frontend/src/components/FutureProjectionSection.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/Dashboard.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-minimal-but-impactful-micro-animations-across-dashboard-interactions-sliders-should-feel-fluid-supplement-completion-should-trigger-a-soft-wipe-highlight-and-saving-training-should-trigger-a-brief-energy-pulse-animation-without-adding-new-popups-or-changing-workflows",
+      "featureTitle": "Apply minimal-but-impactful micro-animations across Dashboard interactions: sliders should feel fluid, supplement completion should trigger a soft wipe highlight, and saving training should trigger a brief energy pulse animation (without adding new popups or changing workflows).",
+      "files": [
+        "frontend/src/components/GradientSlider.tsx",
+        "frontend/src/components/SupplementCard.tsx",
+        "frontend/src/components/TrainingCard.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/Dashboard.tsx"
+      ],
+      "components": [
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "stripe@3.0.0",
+        "http-outcalls@3.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
       ],
       "confidence": "high"
     }

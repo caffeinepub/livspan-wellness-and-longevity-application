@@ -66,7 +66,7 @@ export default function FutureProjectionSection({
         {panels.map((panel, index) => (
           <div 
             key={index}
-            className="future-panel rounded-xl p-6 flex flex-col items-center gap-4 animate-fade-in"
+            className="future-panel rounded-xl flex flex-col items-center gap-4 animate-fade-in"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             <div className="relative w-24 h-24 mb-2">
@@ -74,7 +74,7 @@ export default function FutureProjectionSection({
                 src="/assets/generated/future-silhouette-outline.dim_512x512.png"
                 alt="Future projection"
                 className="w-full h-full object-contain opacity-60"
-                style={{ filter: 'drop-shadow(0 0 10px oklch(var(--luxury-gold) / 0.3))' }}
+                style={{ filter: 'drop-shadow(0 0 10px oklch(0.75 0.15 85 / 0.3))' }}
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <User className="h-12 w-12 text-luxury-gold opacity-40" />
@@ -86,7 +86,7 @@ export default function FutureProjectionSection({
                 {panel.title}
               </h3>
               <div className="flex items-center justify-center gap-2">
-                <span className="text-4xl font-bold text-luxury-gold-bright">
+                <span className="text-4xl font-bold luxury-text-gold">
                   {panel.value}
                 </span>
                 <span className="text-xl text-muted-foreground">

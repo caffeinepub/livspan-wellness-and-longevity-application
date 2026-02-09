@@ -51,9 +51,10 @@ export default {
                 },
                 'luxury-gold': {
                     DEFAULT: 'oklch(var(--luxury-gold))',
+                    dark: 'oklch(var(--luxury-gold-dark))',
                     bright: 'oklch(var(--luxury-gold-bright))'
                 },
-                'jade-dark': 'oklch(var(--jade-dark))',
+                'dark-jade': 'oklch(var(--dark-jade))',
                 'jade-bright': 'oklch(var(--jade-bright))',
                 'emerald': 'oklch(var(--emerald))',
                 'turquoise': 'oklch(var(--turquoise))',
@@ -82,7 +83,7 @@ export default {
             },
             boxShadow: {
                 xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-                'glass': '0 8px 32px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(var(--luxury-gold-bright) / 0.1)',
+                'glass': '0 8px 32px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(var(--luxury-gold) / 0.1)',
                 'glass-lg': '0 12px 48px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(var(--luxury-gold-bright) / 0.2)',
                 'glow-sm': '0 0 10px oklch(var(--luxury-gold) / 0.2), 0 0 20px oklch(var(--luxury-gold) / 0.05)',
                 'glow': '0 0 20px oklch(var(--luxury-gold) / 0.3), 0 0 40px oklch(var(--luxury-gold) / 0.1)',

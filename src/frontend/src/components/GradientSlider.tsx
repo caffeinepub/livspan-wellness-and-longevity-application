@@ -1,5 +1,6 @@
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
+import { luxuryGoldGradient } from '../utils/theme';
 
 interface GradientSliderProps {
   value: number;
@@ -8,9 +9,9 @@ interface GradientSliderProps {
   max: number;
   step: number;
   className?: string;
-  gradientStops: {
-    position: number; // 0-100
-    color: string; // oklch color
+  gradientStops?: {
+    position: number;
+    color: string;
   }[];
   showScale?: boolean;
   scaleLabels?: string[];
@@ -27,8 +28,11 @@ export default function GradientSlider({
   showScale = false,
   scaleLabels,
 }: GradientSliderProps) {
+  // Use luxury gold gradient if no custom stops provided
+  const stops = gradientStops || luxuryGoldGradient.scoreGradient;
+  
   // Create gradient string from stops
-  const gradientString = gradientStops
+  const gradientString = stops
     .map((stop) => `${stop.color} ${stop.position}%`)
     .join(', ');
 
@@ -49,7 +53,7 @@ export default function GradientSlider({
   const labels = scaleLabels || defaultScaleLabels();
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('relative smooth-slider', className)}>
       <style>
         {`
           .gradient-slider-track {

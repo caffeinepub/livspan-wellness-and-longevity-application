@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Plus, Save, X, Edit, Trash2 } from 'lucide-react';
 import type { SupplementEntry } from '../backend';
+import { luxuryGoldGradient, createGradientString } from '../utils/theme';
 
 interface SupplementCardProps {
   isGerman: boolean;
@@ -29,6 +30,7 @@ export default function SupplementCard({
 }: SupplementCardProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<bigint | null>(null);
+  const [wipeTriggered, setWipeTriggered] = useState<string | null>(null);
   
   const [newName, setNewName] = useState('');
   const [newDosage, setNewDosage] = useState('');
@@ -117,6 +119,13 @@ export default function SupplementCard({
     }
   };
 
+  const handleToggle = (id: bigint) => {
+    onToggleSupplement(id);
+    const idStr = id.toString();
+    setWipeTriggered(idStr);
+    setTimeout(() => setWipeTriggered(null), 800);
+  };
+
   const sortedSupplements = [...supplements].sort((a, b) => {
     const timeA = a.time.split(':').map(Number);
     const timeB = b.time.split(':').map(Number);
@@ -129,17 +138,6 @@ export default function SupplementCard({
   const totalCount = sortedSupplements.length;
   const completionPercentage = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
-  const supplementGradientStops = [
-    { position: 0, color: 'oklch(0.55 0.22 25)' },
-    { position: 50, color: 'oklch(0.75 0.15 85)' },
-    { position: 80, color: 'oklch(0.60 0.16 155)' },
-    { position: 100, color: 'oklch(0.65 0.14 175)' },
-  ];
-
-  const createGradientString = (stops: typeof supplementGradientStops) => {
-    return stops.map((stop) => `${stop.color} ${stop.position}%`).join(', ');
-  };
-
   return (
     <Card className="glass-panel glass-panel-hover shadow-glass">
       <CardHeader className="pb-3">
@@ -150,7 +148,7 @@ export default function SupplementCard({
               alt={isGerman ? 'Supplement Einnahme' : 'Supplement Intake'} 
               className="h-8 w-8 drop-shadow-md" 
             />
-            <CardTitle className="text-lg text-luxury-gold">
+            <CardTitle className="text-lg luxury-text-gold">
               {isGerman ? 'Supplement Einnahme' : 'Supplement Intake'}
             </CardTitle>
           </div>
@@ -159,7 +157,7 @@ export default function SupplementCard({
             variant="outline"
             onClick={handleAddClick}
             disabled={isAdding}
-            className="transition-all duration-200 hover:scale-105"
+            className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10 hover:border-luxury-gold/50"
           >
             <Plus className="h-4 w-4 mr-1" />
             {isGerman ? 'Hinzufügen' : 'Add'}
@@ -171,10 +169,10 @@ export default function SupplementCard({
           {totalCount > 0 && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-xs font-semibold text-accent">
+                <Label className="text-xs font-semibold text-jade-bright">
                   {isGerman ? 'Täglicher Fortschritt' : 'Daily Progress'}
                 </Label>
-                <span className="text-xs font-semibold text-luxury-gold">
+                <span className="text-xs font-semibold luxury-text-gold">
                   {completedCount}/{totalCount} ({completionPercentage.toFixed(0)}%)
                 </span>
               </div>
@@ -183,7 +181,7 @@ export default function SupplementCard({
                   className="h-full transition-all duration-300"
                   style={{ 
                     width: `${completionPercentage}%`,
-                    background: `linear-gradient(to right, ${createGradientString(supplementGradientStops)})`
+                    background: `linear-gradient(to right, ${createGradientString(luxuryGoldGradient.scoreGradient)})`
                   }}
                 />
               </div>
@@ -191,10 +189,10 @@ export default function SupplementCard({
           )}
 
           {isAdding && (
-            <div className="p-4 border rounded-lg bg-muted/20 backdrop-blur-sm space-y-3">
+            <div className="p-4 border border-luxury-gold/20 rounded-lg bg-muted/20 backdrop-blur-sm space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <Label htmlFor="new-name" className="text-xs">
+                  <Label htmlFor="new-name" className="text-xs text-jade-bright">
                     {isGerman ? 'Name' : 'Name'}
                   </Label>
                   <Input
@@ -202,11 +200,11 @@ export default function SupplementCard({
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder={isGerman ? 'z.B. Vitamin D3' : 'e.g. Vitamin D3'}
-                    className="h-9"
+                    className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="new-dosage" className="text-xs">
+                  <Label htmlFor="new-dosage" className="text-xs text-jade-bright">
                     {isGerman ? 'Dosierung' : 'Dosage'}
                   </Label>
                   <Input
@@ -214,12 +212,12 @@ export default function SupplementCard({
                     value={newDosage}
                     onChange={(e) => setNewDosage(e.target.value)}
                     placeholder={isGerman ? 'z.B. 2000 IU' : 'e.g. 2000 IU'}
-                    className="h-9"
+                    className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                   />
                 </div>
               </div>
               <div>
-                <Label htmlFor="new-time" className="text-xs">
+                <Label htmlFor="new-time" className="text-xs text-jade-bright">
                   {isGerman ? 'Uhrzeit' : 'Time'}
                 </Label>
                 <Input
@@ -227,11 +225,11 @@ export default function SupplementCard({
                   type="time"
                   value={newTime}
                   onChange={(e) => setNewTime(e.target.value)}
-                  className="h-9"
+                  className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                 />
               </div>
               <div>
-                <Label htmlFor="new-note" className="text-xs">
+                <Label htmlFor="new-note" className="text-xs text-jade-bright">
                   {isGerman ? 'Notiz (optional)' : 'Note (optional)'}
                 </Label>
                 <Textarea
@@ -240,15 +238,24 @@ export default function SupplementCard({
                   onChange={(e) => setNewNote(e.target.value)}
                   placeholder={isGerman ? 'Zusätzliche Hinweise...' : 'Additional notes...'}
                   rows={2}
-                  className="resize-none"
+                  className="resize-none border-luxury-gold/20 focus:border-luxury-gold/50"
                 />
               </div>
               <div className="flex gap-2 justify-end">
-                <Button size="sm" variant="outline" onClick={handleCancelAdd} className="transition-all duration-200 hover:scale-105">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={handleCancelAdd} 
+                  className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
+                >
                   <X className="h-4 w-4 mr-1" />
                   {isGerman ? 'Abbrechen' : 'Cancel'}
                 </Button>
-                <Button size="sm" onClick={handleSaveNew} className="transition-all duration-200 hover:scale-105">
+                <Button 
+                  size="sm" 
+                  onClick={handleSaveNew} 
+                  className="transition-all duration-200 hover:scale-105 bg-luxury-gold hover:bg-luxury-gold-bright text-black"
+                >
                   <Save className="h-4 w-4 mr-1" />
                   {isGerman ? 'Speichern' : 'Save'}
                 </Button>
@@ -267,37 +274,38 @@ export default function SupplementCard({
           {sortedSupplements.map((supplement) => {
             const idStr = supplement.id.toString();
             const isCompleted = supplementCompletions[idStr] || false;
-            const isEditing = editingId?.toString() === idStr;
+            const isEditing = editingId === supplement.id;
+            const shouldWipe = wipeTriggered === idStr;
 
             if (isEditing) {
               return (
-                <div key={supplement.id.toString()} className="p-4 border rounded-lg bg-muted/20 backdrop-blur-sm space-y-3">
+                <div key={idStr} className="p-4 border border-luxury-gold/20 rounded-lg bg-muted/20 backdrop-blur-sm space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor={`edit-name-${idStr}`} className="text-xs">
+                      <Label htmlFor={`edit-name-${idStr}`} className="text-xs text-jade-bright">
                         {isGerman ? 'Name' : 'Name'}
                       </Label>
                       <Input
                         id={`edit-name-${idStr}`}
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="h-9"
+                        className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                       />
                     </div>
                     <div>
-                      <Label htmlFor={`edit-dosage-${idStr}`} className="text-xs">
+                      <Label htmlFor={`edit-dosage-${idStr}`} className="text-xs text-jade-bright">
                         {isGerman ? 'Dosierung' : 'Dosage'}
                       </Label>
                       <Input
                         id={`edit-dosage-${idStr}`}
                         value={editDosage}
                         onChange={(e) => setEditDosage(e.target.value)}
-                        className="h-9"
+                        className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                       />
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor={`edit-time-${idStr}`} className="text-xs">
+                    <Label htmlFor={`edit-time-${idStr}`} className="text-xs text-jade-bright">
                       {isGerman ? 'Uhrzeit' : 'Time'}
                     </Label>
                     <Input
@@ -305,11 +313,11 @@ export default function SupplementCard({
                       type="time"
                       value={editTime}
                       onChange={(e) => setEditTime(e.target.value)}
-                      className="h-9"
+                      className="h-9 border-luxury-gold/20 focus:border-luxury-gold/50"
                     />
                   </div>
                   <div>
-                    <Label htmlFor={`edit-note-${idStr}`} className="text-xs">
+                    <Label htmlFor={`edit-note-${idStr}`} className="text-xs text-jade-bright">
                       {isGerman ? 'Notiz (optional)' : 'Note (optional)'}
                     </Label>
                     <Textarea
@@ -317,15 +325,24 @@ export default function SupplementCard({
                       value={editNote}
                       onChange={(e) => setEditNote(e.target.value)}
                       rows={2}
-                      className="resize-none"
+                      className="resize-none border-luxury-gold/20 focus:border-luxury-gold/50"
                     />
                   </div>
                   <div className="flex gap-2 justify-end">
-                    <Button size="sm" variant="outline" onClick={handleCancelEdit} className="transition-all duration-200 hover:scale-105">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={handleCancelEdit} 
+                      className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
+                    >
                       <X className="h-4 w-4 mr-1" />
                       {isGerman ? 'Abbrechen' : 'Cancel'}
                     </Button>
-                    <Button size="sm" onClick={handleSaveEdit} className="transition-all duration-200 hover:scale-105">
+                    <Button 
+                      size="sm" 
+                      onClick={handleSaveEdit} 
+                      className="transition-all duration-200 hover:scale-105 bg-luxury-gold hover:bg-luxury-gold-bright text-black"
+                    >
                       <Save className="h-4 w-4 mr-1" />
                       {isGerman ? 'Speichern' : 'Save'}
                     </Button>
@@ -336,66 +353,56 @@ export default function SupplementCard({
 
             return (
               <div 
-                key={supplement.id.toString()} 
-                className={`supplement-wipe border rounded-lg p-3 bg-background/50 backdrop-blur-sm transition-all duration-200 hover:bg-background/70 ${isCompleted ? 'completed' : ''}`}
+                key={idStr} 
+                className={`flex items-start gap-3 p-3 rounded-lg border transition-all duration-200 hover:bg-muted/30 ${
+                  isCompleted 
+                    ? 'border-jade-bright/30 bg-jade-bright/5' 
+                    : 'border-border/50 bg-muted/20'
+                } ${shouldWipe ? 'supplement-wipe' : ''}`}
               >
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    id={`supplement-${supplement.id}`}
-                    checked={isCompleted}
-                    onCheckedChange={() => onToggleSupplement(supplement.id)}
-                    className="mt-1"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <label
-                      htmlFor={`supplement-${supplement.id}`}
-                      className="cursor-pointer text-sm font-medium leading-none block"
-                    >
-                      {supplement.name}
-                    </label>
-                    <div className="mt-1.5 space-y-0.5">
-                      <p className="text-xs text-muted-foreground">
-                        <span className="font-medium text-accent">
-                          {isGerman ? 'Dosierung:' : 'Dosage:'}
-                        </span>{' '}
-                        {supplement.dosage}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        <span className="font-medium text-accent">
-                          {isGerman ? 'Uhrzeit:' : 'Time:'}
-                        </span>{' '}
-                        {supplement.time}
-                      </p>
-                      {supplement.note && (
-                        <p className="text-xs text-muted-foreground">
-                          <span className="font-medium text-accent">
-                            {isGerman ? 'Notiz:' : 'Note:'}
-                          </span>{' '}
-                          {supplement.note}
-                        </p>
-                      )}
-                    </div>
+                <Checkbox
+                  id={`supplement-${idStr}`}
+                  checked={isCompleted}
+                  onCheckedChange={() => handleToggle(supplement.id)}
+                  className="mt-1"
+                />
+                <div className="flex-1 min-w-0">
+                  <label
+                    htmlFor={`supplement-${idStr}`}
+                    className={`block font-medium cursor-pointer ${
+                      isCompleted ? 'line-through text-muted-foreground' : ''
+                    }`}
+                  >
+                    {supplement.name}
+                  </label>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-muted-foreground">
+                    <span>{supplement.dosage}</span>
+                    <span>•</span>
+                    <span>{supplement.time}</span>
                   </div>
-                  <div className="flex gap-1">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleEditClick(supplement)}
-                      className="h-8 w-8 p-0 transition-all duration-200 hover:scale-110"
-                      title={isGerman ? 'Bearbeiten' : 'Edit'}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleDelete(supplement.id)}
-                      className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-200 hover:scale-110"
-                      title={isGerman ? 'Löschen' : 'Delete'}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  {supplement.note && (
+                    <p className="text-xs text-muted-foreground mt-1 italic">
+                      {supplement.note}
+                    </p>
+                  )}
+                </div>
+                <div className="flex gap-1">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleEditClick(supplement)}
+                    className="h-8 w-8 p-0 transition-all duration-200 hover:scale-110"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleDelete(supplement.id)}
+                    className="h-8 w-8 p-0 transition-all duration-200 hover:scale-110 hover:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             );

@@ -25,14 +25,6 @@ export default function SleepCard({
     return isGerman ? 'Schlecht' : 'Poor';
   };
 
-  // Gradient stops for sleep quality dial
-  const qualityGradientStops = [
-    { position: 0, color: 'oklch(0.55 0.22 25)' }, // red
-    { position: 40, color: 'oklch(0.75 0.15 85)' }, // yellow
-    { position: 60, color: 'oklch(0.60 0.16 155)' }, // green start
-    { position: 100, color: 'oklch(0.65 0.14 175)' }, // turquoise end
-  ];
-
   return (
     <Card className="glass-panel shadow-glass">
       <CardHeader className="pb-3">
@@ -75,7 +67,6 @@ export default function SleepCard({
                 label={isGerman ? 'Schlafqualität' : 'Sleep Quality'}
                 unit="/10"
                 size={180}
-                gradientStops={qualityGradientStops}
               />
             </div>
           </div>

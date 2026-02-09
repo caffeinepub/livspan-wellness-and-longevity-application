@@ -1,86 +1,113 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-06T13:13:26.215Z",
+  "generatedAt": "2026-02-08T08:57:34.560Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 6,
+    "implemented": 6,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Replace slider-based inputs across all routine cards with modern dashboard-matching input controls (avoid classic horizontal sliders), while keeping the same underlying numeric ranges/steps and preserving existing state updates/localStorage behavior.",
+        "summary": "Update the Dashboard visual theme to a premium gold + dark jade + emerald/turquoise palette with ruby-red reserved for warnings, and apply it consistently across Dashboard surfaces (background, cards/panels, borders, highlights, icons, and interactive states) while keeping all existing functionality unchanged.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/utils/theme.ts",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/components/ScoreRing.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/utils/theme.ts",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/components/ScoreRing.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Implement and apply a dial-based input (using the existing ChronographDial component) for routine values where a circular control better matches the dashboard aesthetic, and integrate it into the relevant routine cards.",
+        "summary": "Implement a subtle animated 'gold energy source' background for the Dashboard: keep the gold background visually static overall but add a barely noticeable caustics/light-ray drift effect (e.g., a fixed full-screen overlay layer with very low opacity and slow movement).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/ChronographDial.tsx"
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/index.css",
+          "frontend/public/assets/generated/gold-caustics-overlay.dim_2400x1350.png",
+          "frontend/public/assets/generated/premium-bokeh-overlay.dim_2400x1350.png"
         ],
         "matchedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/ChronographDial.tsx"
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/index.css",
+          "frontend/public/assets/generated/gold-caustics-overlay.dim_2400x1350.png"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Add stepper and segmented/chip-style inputs as slider replacements for the remaining routine fields, choosing control types that match the earlier recommendations (e.g., steppers for precise numeric vitals and body composition; segmented/chips for qualitative ratings), and update the affected routine components accordingly.",
+        "summary": "Redesign routine sections on the Dashboard as futuristic semi-transparent glass 'Energy Capsules' with a soft glow, using completion-based fill that visually fills upward as the routine is completed (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/StepperInput.tsx",
-          "frontend/src/components/ChipsInput.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx"
+          "frontend/src/components/EnergyCapsule.tsx",
+          "frontend/src/index.css",
+          "frontend/src/pages/Dashboard.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/StepperInput.tsx",
-          "frontend/src/components/ChipsInput.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx"
+          "frontend/src/components/EnergyCapsule.tsx",
+          "frontend/src/index.css",
+          "frontend/src/pages/Dashboard.tsx"
         ]
       },
       {
         "id": "REQ-4",
-        "summary": "Ensure the redesigned routine inputs remain consistent and reusable by introducing shared UI primitives/components (as needed) and applying consistent interaction/motion across routine cards (smooth value transitions; no jarring jumps).",
+        "summary": "Upgrade the score area to feel like a 'portal to the future': ensure the central score ring has a gentle pulse, a gold shimmer on contours, and an additional thin spark ring/particle circle that rotates slowly around it (pure CSS/SVG/canvas acceptable).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx",
+          "frontend/src/components/ScoreRing.tsx",
+          "frontend/src/index.css",
+          "frontend/src/utils/theme.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ScoreRing.tsx",
+          "frontend/src/index.css",
+          "frontend/src/utils/theme.ts"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Implement the 'Future Projection Layer' as a dedicated section on the Dashboard (either above the main routine grid or in a clearly separated block), showing three panels: Biological Youth, Body Form, and Energy & Focus, each with trend indicator, numeric value, and a small elegant silhouette outline.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/FutureProjectionSection.tsx",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/index.css",
+          "frontend/public/assets/generated/future-silhouette-outline.dim_512x512.png"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/FutureProjectionSection.tsx",
+          "frontend/src/pages/Dashboard.tsx",
+          "frontend/src/index.css",
+          "frontend/public/assets/generated/future-silhouette-outline.dim_512x512.png"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Apply minimal-but-impactful micro-animations across Dashboard interactions: sliders should feel fluid, supplement completion should trigger a soft wipe highlight, and saving training should trigger a brief energy pulse animation (without adding new popups or changing workflows).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/GradientSlider.tsx",
+          "frontend/src/components/SupplementCard.tsx",
+          "frontend/src/components/TrainingCard.tsx",
+          "frontend/src/pages/Dashboard.tsx",
           "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/src/components/FastingTimer.tsx",
-          "frontend/src/components/SleepCard.tsx",
-          "frontend/src/components/NutritionCard.tsx",
-          "frontend/src/components/StressCard.tsx",
-          "frontend/src/components/BodyCompositionCard.tsx",
+          "frontend/src/components/GradientSlider.tsx",
+          "frontend/src/components/SupplementCard.tsx",
+          "frontend/src/components/TrainingCard.tsx",
+          "frontend/src/pages/Dashboard.tsx",
           "frontend/src/index.css"
         ]
       }
@@ -88,19 +115,23 @@
   },
   "changedFiles": [
     "build-request.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/BodyCompositionCard.tsx",
-    "frontend/src/components/ChipsInput.tsx",
+    "frontend/public/assets/generated/future-silhouette-outline.dim_512x512.png",
+    "frontend/public/assets/generated/gold-caustics-overlay.dim_2400x1350.png",
+    "frontend/public/assets/generated/luxury-bokeh-overlay.dim_2400x1350.png",
     "frontend/src/components/ChronographDial.tsx",
-    "frontend/src/components/FastingTimer.tsx",
-    "frontend/src/components/NutritionCard.tsx",
-    "frontend/src/components/SleepCard.tsx",
-    "frontend/src/components/StepperInput.tsx",
-    "frontend/src/components/StressCard.tsx",
+    "frontend/src/components/EnergyCapsule.tsx",
+    "frontend/src/components/FutureProjectionSection.tsx",
+    "frontend/src/components/GradientSlider.tsx",
+    "frontend/src/components/ScoreRing.tsx",
+    "frontend/src/components/SupplementCard.tsx",
+    "frontend/src/components/TrainingCard.tsx",
     "frontend/src/index.css",
+    "frontend/src/pages/Dashboard.tsx",
+    "frontend/src/utils/theme.ts",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

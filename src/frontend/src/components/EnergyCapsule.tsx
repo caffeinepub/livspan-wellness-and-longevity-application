@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 interface EnergyCapsuleProps {
   children: ReactNode;
   completion: number; // 0-1
-  accentMode?: 'gold' | 'jade';
+  accentMode?: 'gold' | 'jade' | 'emerald';
   className?: string;
 }
 
@@ -14,15 +14,18 @@ export default function EnergyCapsule({
   className = '' 
 }: EnergyCapsuleProps) {
   const completionPercent = Math.min(100, Math.max(0, completion * 100));
-  const glowClass = completion > 0.7 ? 'energy-capsule-glow' : '';
+  const isHighCompletion = completion > 0.7;
+  
+  const modeClass = accentMode === 'gold' ? '' : accentMode === 'jade' ? 'jade-mode' : 'emerald-mode';
+  const completionAttr = isHighCompletion ? 'high' : 'low';
 
   return (
-    <div className={`energy-capsule rounded-xl relative ${glowClass} ${className}`}>
-      <div 
-        className="energy-fill"
-        style={{ height: `${completionPercent}%` }}
-      />
-      <div className="relative z-10">
+    <div 
+      className={`energy-capsule ${modeClass} ${className}`}
+      style={{ '--fill-height': `${completionPercent}%` } as React.CSSProperties}
+      data-completion={completionAttr}
+    >
+      <div className="relative z-10 p-6">
         {children}
       </div>
     </div>

@@ -8,15 +8,18 @@
     --background: 0 0% 5%;
     --foreground: 0 0% 95%;
 
-    /* Luxury gold accents - primary brand color */
-    --luxury-gold: 45 100% 51%;
-    --luxury-gold-dark: 38 92% 45%;
-    --luxury-gold-light: 48 100% 67%;
+    /* Premium gold palette - primary brand colors */
+    --luxury-gold: 0.75 0.15 85;
+    --luxury-gold-dark: 0.65 0.18 75;
+    --luxury-gold-bright: 0.85 0.12 95;
 
-    /* Premium jade/emerald/turquoise palette */
-    --jade: 155 65% 45%;
-    --emerald: 160 84% 39%;
-    --turquoise: 175 70% 41%;
+    /* Dark jade for health metrics */
+    --dark-jade: 0.55 0.12 160;
+    --jade-bright: 0.65 0.14 155;
+
+    /* Emerald and turquoise for nutrition/water */
+    --emerald: 0.60 0.15 170;
+    --turquoise: 0.65 0.13 190;
 
     /* Card and panel backgrounds with glass effect */
     --card: 0 0% 8%;
@@ -27,36 +30,36 @@
     --popover-foreground: 0 0% 95%;
 
     /* Primary color (luxury gold) */
-    --primary: 45 100% 51%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 0.75 0.15 85;
+    --primary-foreground: 0 0% 10%;
 
-    /* Secondary color (jade) */
-    --secondary: 155 65% 45%;
+    /* Secondary color (dark jade) */
+    --secondary: 0.55 0.12 160;
     --secondary-foreground: 0 0% 98%;
 
     /* Muted backgrounds and text */
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
 
-    /* Accent color (turquoise) */
-    --accent: 175 70% 41%;
+    /* Accent color (emerald) */
+    --accent: 0.60 0.15 170;
     --accent-foreground: 0 0% 98%;
 
-    /* Destructive/error states */
-    --destructive: 0 62.8% 30.6%;
+    /* Destructive/error states (ruby-red) */
+    --destructive: 0.45 0.20 15;
     --destructive-foreground: 0 0% 98%;
 
     /* Border colors */
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 45 100% 51%;
+    --ring: 0.75 0.15 85;
 
-    /* Chart colors */
-    --chart-1: 45 100% 51%;
-    --chart-2: 155 65% 45%;
-    --chart-3: 175 70% 41%;
-    --chart-4: 160 84% 39%;
-    --chart-5: 48 100% 67%;
+    /* Chart colors - gold/jade/emerald gradient palette */
+    --chart-1: 0.75 0.15 85;
+    --chart-2: 0.55 0.12 160;
+    --chart-3: 0.60 0.15 170;
+    --chart-4: 0.65 0.13 190;
+    --chart-5: 0.70 0.14 180;
 
     /* Radius */
     --radius: 0.5rem;
@@ -77,13 +80,13 @@
   }
 }
 
-/* Luxury glass panel effect */
+/* Premium gold glass panel effect */
 @layer utilities {
   .glass-panel {
     background: linear-gradient(
       135deg,
-      oklch(0.12 0.02 165 / 0.8) 0%,
-      oklch(0.08 0.01 165 / 0.9) 100%
+      oklch(0.12 0.02 85 / 0.8) 0%,
+      oklch(0.08 0.01 85 / 0.9) 100%
     );
     backdrop-filter: blur(12px);
     border: 1px solid oklch(0.75 0.15 85 / 0.15);
@@ -113,9 +116,9 @@
   .luxury-text-gold {
     background: linear-gradient(
       135deg,
-      oklch(0.85 0.15 85) 0%,
+      oklch(0.85 0.12 95) 0%,
       oklch(0.75 0.15 85) 50%,
-      oklch(0.65 0.12 80) 100%
+      oklch(0.65 0.18 75) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -126,7 +129,7 @@
     background: linear-gradient(
       135deg,
       oklch(0.75 0.15 85) 0%,
-      oklch(0.65 0.12 80) 100%
+      oklch(0.85 0.12 95) 100%
     );
   }
 
@@ -138,8 +141,8 @@
     position: relative;
     background: linear-gradient(
       135deg,
-      oklch(0.12 0.02 165 / 0.6) 0%,
-      oklch(0.08 0.01 165 / 0.8) 100%
+      oklch(0.12 0.02 85 / 0.6) 0%,
+      oklch(0.08 0.01 85 / 0.8) 100%
     );
     backdrop-filter: blur(16px);
     border: 1px solid oklch(0.75 0.15 85 / 0.2);
@@ -164,18 +167,19 @@
     transform: translateY(0);
   }
 
-  /* Energy Capsule Animation */
+  /* Energy Capsule Animation - premium gold/jade theme */
   .energy-capsule {
     position: relative;
     overflow: hidden;
     border-radius: 1rem;
     background: linear-gradient(
       135deg,
-      oklch(0.12 0.02 165 / 0.4) 0%,
-      oklch(0.08 0.01 165 / 0.6) 100%
+      oklch(0.12 0.02 85 / 0.4) 0%,
+      oklch(0.08 0.01 85 / 0.6) 100%
     );
     backdrop-filter: blur(12px);
     border: 1px solid oklch(0.75 0.15 85 / 0.15);
+    transition: box-shadow 0.3s ease;
   }
 
   .energy-capsule::before {
@@ -187,20 +191,49 @@
     height: var(--fill-height, 0%);
     background: linear-gradient(
       180deg,
-      oklch(0.60 0.16 155 / 0.15) 0%,
-      oklch(0.65 0.14 175 / 0.25) 100%
+      oklch(0.75 0.15 85 / 0.15) 0%,
+      oklch(0.85 0.12 95 / 0.25) 100%
     );
     transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     z-index: 0;
   }
 
+  .energy-capsule.jade-mode {
+    border: 1px solid oklch(0.55 0.12 160 / 0.15);
+  }
+
   .energy-capsule.jade-mode::before {
     background: linear-gradient(
       180deg,
-      oklch(0.60 0.16 155 / 0.2) 0%,
-      oklch(0.65 0.14 175 / 0.3) 100%
+      oklch(0.55 0.12 160 / 0.2) 0%,
+      oklch(0.65 0.14 155 / 0.3) 100%
     );
+  }
+
+  .energy-capsule.emerald-mode {
+    border: 1px solid oklch(0.60 0.15 170 / 0.15);
+  }
+
+  .energy-capsule.emerald-mode::before {
+    background: linear-gradient(
+      180deg,
+      oklch(0.60 0.15 170 / 0.2) 0%,
+      oklch(0.65 0.13 190 / 0.3) 100%
+    );
+  }
+
+  /* Glow intensifies with completion */
+  .energy-capsule[data-completion="high"] {
+    box-shadow: 0 0 20px oklch(0.75 0.15 85 / 0.3);
+  }
+
+  .energy-capsule.jade-mode[data-completion="high"] {
+    box-shadow: 0 0 20px oklch(0.55 0.12 160 / 0.3);
+  }
+
+  .energy-capsule.emerald-mode[data-completion="high"] {
+    box-shadow: 0 0 20px oklch(0.60 0.15 170 / 0.3);
   }
 
   .energy-capsule > * {
@@ -208,7 +241,7 @@
     z-index: 1;
   }
 
-  /* Portal Ring Effects */
+  /* Portal Ring Effects - gold shimmer */
   .portal-ring-glow {
     filter: drop-shadow(0 0 8px oklch(0.75 0.15 85 / 0.4))
             drop-shadow(0 0 16px oklch(0.75 0.15 85 / 0.2));
@@ -229,12 +262,33 @@
     }
   }
 
+  /* Rotating spark ring */
+  .spark-ring {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: oklch(0.85 0.12 95 / 0.6);
+    border-right-color: oklch(0.75 0.15 85 / 0.3);
+    animation: spark-rotate 8s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spark-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   /* Future Projection Panels */
   .future-panel {
     background: linear-gradient(
       135deg,
-      oklch(0.12 0.02 165 / 0.7) 0%,
-      oklch(0.08 0.01 165 / 0.85) 100%
+      oklch(0.12 0.02 85 / 0.7) 0%,
+      oklch(0.08 0.01 85 / 0.85) 100%
     );
     backdrop-filter: blur(16px);
     border: 1px solid oklch(0.75 0.15 85 / 0.2);
@@ -245,7 +299,7 @@
       inset 0 1px 0 0 oklch(0.75 0.15 85 / 0.15);
   }
 
-  /* Supplement Wipe Animation */
+  /* Supplement Wipe Animation - gold */
   .supplement-wipe {
     position: relative;
     overflow: hidden;
@@ -261,7 +315,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      oklch(0.60 0.16 155 / 0.3) 50%,
+      oklch(0.75 0.15 85 / 0.3) 50%,
       transparent 100%
     );
     animation: supplement-wipe-animation 0.8s ease-out;
@@ -277,7 +331,7 @@
     }
   }
 
-  /* Training Pulse Effect */
+  /* Training Pulse Effect - gold */
   .training-pulse {
     animation: training-pulse-animation 0.6s ease-out;
   }
@@ -285,15 +339,15 @@
   @keyframes training-pulse-animation {
     0% {
       transform: scale(1);
-      box-shadow: 0 0 0 0 oklch(0.60 0.16 155 / 0.7);
+      box-shadow: 0 0 0 0 oklch(0.75 0.15 85 / 0.7);
     }
     50% {
       transform: scale(1.05);
-      box-shadow: 0 0 0 10px oklch(0.60 0.16 155 / 0);
+      box-shadow: 0 0 0 10px oklch(0.75 0.15 85 / 0);
     }
     100% {
       transform: scale(1);
-      box-shadow: 0 0 0 0 oklch(0.60 0.16 155 / 0);
+      box-shadow: 0 0 0 0 oklch(0.75 0.15 85 / 0);
     }
   }
 
@@ -316,7 +370,7 @@
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.03;
+    opacity: 0.04;
     background-image: url('/assets/generated/gold-caustics-overlay.dim_2400x1350.png');
     background-size: cover;
     background-position: center;
@@ -338,6 +392,21 @@
     }
   }
 
+  /* Premium Bokeh Depth Layer */
+  .bokeh-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.02;
+    background-image: url('/assets/generated/premium-bokeh-overlay.dim_2400x1350.png');
+    background-size: cover;
+    background-position: center;
+  }
+
   /* Shimmer Gold Animation */
   @keyframes shimmer-gold {
     0% {
@@ -352,14 +421,14 @@
     background: linear-gradient(
       90deg,
       oklch(0.75 0.15 85 / 0.3) 0%,
-      oklch(0.85 0.15 85 / 0.6) 50%,
+      oklch(0.85 0.12 95 / 0.6) 50%,
       oklch(0.75 0.15 85 / 0.3) 100%
     );
     background-size: 200% auto;
     animation: shimmer-gold 3s linear infinite;
   }
 
-  /* Glow Pulse Animation */
+  /* Glow Pulse Animation - gold */
   @keyframes glow-pulse {
     0%, 100% {
       box-shadow: 0 0 20px oklch(0.75 0.15 85 / 0.3);
@@ -403,5 +472,14 @@
 
   .animate-slide-up {
     animation: slide-up 0.4s ease-out;
+  }
+
+  /* Smooth slider transitions */
+  .smooth-slider input[type="range"] {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .smooth-slider [role="slider"] {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

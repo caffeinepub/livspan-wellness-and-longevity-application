@@ -1,12 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Redesign routine input controls across the Dashboard routine cards to match the luxury/glass dashboard style by replacing classic slider interactions with modern alternatives (dials, steppers, segmented/chip controls) without changing data behavior.
+**Goal:** Redesign the Dashboard UI into a premium gold + dark jade + emerald/turquoise theme with subtle animated “gold energy” ambience, futuristic glass “Energy Capsules,” an upgraded animated score ring, and a new “Future Projection” section—without changing any existing Dashboard functionality.
 
 **Planned changes:**
-- Replace slider-based inputs in Fasting, Sleep, Nutrition, Stress/Vitals, and Body Composition cards with dashboard-styled controls while preserving the same min/max/step constraints and existing state/localStorage + Save Daily Routine flow.
-- Apply the existing ChronographDial as the primary control for at least two routine fields where a circular dial fits the aesthetic (with mouse/touch support and step snapping).
-- Introduce and reuse shared input primitives (e.g., StepperInput, SegmentedControl/Chips) across multiple cards to avoid ad-hoc UI duplication and to keep interactions consistent.
-- Ensure new user-facing strings added for these controls are in English and that the updated controls remain visually aligned with the current dashboard theme (no unstyled HTML inputs).
+- Update Dashboard styling to a consistent premium palette (gold highlights, dark jade for health values, emerald/turquoise for water/nutrition, ruby-red only for warnings) across backgrounds, panels, borders, icons, and interactive states.
+- Add a subtle, performance-safe animated gold caustics/light-ray overlay behind Dashboard content (non-interactive overlay layer).
+- Redesign routine sections into semi-transparent glass “Energy Capsules” with soft glow and a completion-based fill that animates upward as completion increases (using existing completion computations).
+- Upgrade the central score area to a “portal” feel: gentle pulse, gold shimmer contours, and a thin rotating spark ring effect around the score ring.
+- Add a dedicated “Future Projection” section with exactly three panels (Biological Youth, Body Form, Energy & Focus), each showing a value, trend indicator, and a small silhouette outline.
+- Add minimal micro-animations on Dashboard interactions: smoother slider feel, supplement completion wipe/highlight, and a brief energy pulse when saving training—without new popups or workflow changes.
 
-**User-visible outcome:** Users can edit all routine values on the Dashboard using modern, dashboard-matching controls (dials/steppers/segments/chips) instead of sliders, with the same ranges, steps, calculations, and save behavior as before.
+**User-visible outcome:** The Dashboard appears as a premium gold/jade/emerald interface with subtle animated energy ambience, glass capsule routine tiles that visibly fill with progress, a pulsing/shimmering score ring with rotating spark effect, a new Future Projection block with three trend panels, and smoother, more polished interaction animations—while all existing tracking and calculations behave the same.

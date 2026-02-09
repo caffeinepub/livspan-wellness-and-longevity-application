@@ -19,7 +19,7 @@ export default function LoginScreen() {
             className="h-40 w-40 object-contain" 
           />
           <div className="text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-foreground">LivSpan</h1>
+            <h1 className="text-5xl font-bold tracking-tight luxury-text-gold">LivSpan</h1>
             <p className="mt-2 text-xl text-muted-foreground">Decode your Longevity</p>
           </div>
         </div>
