@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Loader2, FileText } from 'lucide-react';
-import { Variant_de_en, Gender } from '../backend';
+import { UserProfile } from '../backend';
+import { isGerman, isMale, isFemale } from '../utils/backendVariants';
 
 interface SettingsDialogProps {
   open: boolean;
@@ -29,15 +30,15 @@ export default function SettingsDialog({ open, onOpenChange, onShowDisclaimer }:
       setBirthYear(userProfile.birthYear.toString());
       setBodyHeightCm(userProfile.bodyHeightCm.toString());
       
-      if (userProfile.gender === Gender.male) {
+      if (isMale(userProfile.gender)) {
         setGender('male');
-      } else if (userProfile.gender === Gender.female) {
+      } else if (isFemale(userProfile.gender)) {
         setGender('female');
       } else {
         setGender('other');
       }
       
-      setLanguage(userProfile.preferences.language === Variant_de_en.en ? 'en' : 'de');
+      setLanguage(isGerman(userProfile.preferences.language) ? 'de' : 'en');
     }
   }, [userProfile]);
 
@@ -51,31 +52,21 @@ export default function SettingsDialog({ open, onOpenChange, onShowDisclaimer }:
       return;
     }
 
-    let genderEnum: Gender;
-    if (gender === 'male') {
-      genderEnum = Gender.male;
-    } else if (gender === 'female') {
-      genderEnum = Gender.female;
-    } else {
-      genderEnum = Gender.other;
-    }
-
-    saveProfile(
-      {
-        name: name.trim(),
-        birthYear: BigInt(year),
-        bodyHeightCm: BigInt(height),
-        gender: genderEnum,
-        preferences: {
-          language: language === 'en' ? Variant_de_en.en : Variant_de_en.de,
-        },
+    const profile: UserProfile = {
+      name: name.trim(),
+      birthYear: BigInt(year),
+      bodyHeightCm: BigInt(height),
+      gender: gender as any,
+      preferences: {
+        language: language as any,
       },
-      {
-        onSuccess: () => {
-          onOpenChange(false);
-        },
-      }
-    );
+    };
+
+    saveProfile(profile, {
+      onSuccess: () => {
+        onOpenChange(false);
+      },
+    });
   };
 
   const handleShowDisclaimer = () => {

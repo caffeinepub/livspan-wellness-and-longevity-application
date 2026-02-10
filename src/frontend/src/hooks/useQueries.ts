@@ -481,14 +481,21 @@ export function useGetTrainings() {
   });
 }
 
-export function useSaveTraining() {
+export function useSaveAllTrainings() {
   const { actor } = useActor();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (training: Training) => {
+    mutationFn: async (trainings: Training[]) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.saveTraining(training);
+      
+      // Clear existing trainings first
+      await actor.clearTrainings();
+      
+      // Save each training sequentially
+      for (const training of trainings) {
+        await actor.saveTraining(training);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['trainings'] });

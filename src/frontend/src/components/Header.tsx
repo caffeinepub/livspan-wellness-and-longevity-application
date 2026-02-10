@@ -124,10 +124,9 @@ export default function Header({ onShowDisclaimer }: HeaderProps) {
                 </SheetContent>
               </Sheet>
 
-              <img src="/assets/MagicEraser_251230_145221.png" alt="LivSpan Logo" className="h-12 w-12 drop-shadow-lg" />
-              <div className="hidden sm:block">
+              <div>
                 <h1 className="text-xl font-bold luxury-text-gold">LivSpan</h1>
-                <p className="text-xs text-muted-foreground">Luxury Health Coach</p>
+                <p className="text-xs text-muted-foreground hidden sm:block">Luxury Health Coach</p>
               </div>
             </div>
 

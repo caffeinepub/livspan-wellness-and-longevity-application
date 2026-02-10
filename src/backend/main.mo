@@ -7,10 +7,11 @@ import Principal "mo:core/Principal";
 import Nat "mo:core/Nat";
 import Float "mo:core/Float";
 import Auth "authorization/access-control";
-import List "mo:core/List";
 import Stripe "stripe/stripe";
 import OutCall "http-outcalls/outcall";
 import Int "mo:core/Int";
+
+
 
 actor {
   public type ColorIndicator = {
@@ -252,7 +253,7 @@ actor {
   let bodyCompositionStore = Map.empty<Principal, Map.Map<Time.Time, BodyCompentry>>();
   let journalStore = Map.empty<Principal, Map.Map<Nat, JournalEntry>>();
   let supplementStore = Map.empty<Principal, Map.Map<Nat, SupplementEntry>>();
-  let trainingStore = Map.empty<Principal, List.List<Training>>();
+  var trainingStore = Map.empty<Principal, [Training]>();
 
   var nextJournalId : Nat = 0;
   var nextSupplementId : Nat = 0;
@@ -650,7 +651,7 @@ actor {
       supplementStore.add(caller, Map.empty<Nat, SupplementEntry>());
     };
     if (not trainingStore.containsKey(caller)) {
-      trainingStore.add(caller, List.empty<Training>());
+      trainingStore.add(caller, []);
     };
   };
 
@@ -1381,13 +1382,15 @@ actor {
       Runtime.trap("Unauthorized: Only users can save training sessions");
     };
 
-    let trainingList = switch (trainingStore.get(caller)) {
-      case (null) { List.empty<Training>() };
-      case (?existingList) { existingList };
+    // Fetch current trainings, defaulting to empty array if not found
+    let currentTraining = switch (trainingStore.get(caller)) {
+      case (null) { [] };
+      case (?existing) { existing };
     };
 
-    trainingList.add(training);
-    trainingStore.add(caller, trainingList);
+    // Add new training to the beginning and update the store
+    let updatedTraining = [training].concat(currentTraining);
+    trainingStore.add(caller, updatedTraining);
   };
 
   public query ({ caller }) func getTrainings() : async [Training] {
@@ -1395,9 +1398,10 @@ actor {
       Runtime.trap("Unauthorized: Only users can get training sessions");
     };
 
+    // If not found, return empty array
     switch (trainingStore.get(caller)) {
       case (null) { [] };
-      case (?trainingList) { trainingList.toArray() };
+      case (?trainingList) { trainingList };
     };
   };
 
@@ -1408,5 +1412,5 @@ actor {
 
     trainingStore.remove(caller);
   };
-
 };
+

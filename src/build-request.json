@@ -1,134 +1,81 @@
 {
   "kind": "build_request",
-  "title": "Premium gold dashboard redesign with animated energy background, energy capsules, portal score ring, and future projection layer",
-  "priority": "normal",
+  "title": "Remove logo image, redirect to Dashboard after login, and fix app load crash",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the Dashboard visual theme to a premium gold + dark jade + emerald/turquoise palette with ruby-red reserved for warnings, and apply it consistently across Dashboard surfaces (background, cards/panels, borders, highlights, icons, and interactive states) while keeping all existing functionality unchanged.",
+      "text": "Identify and fix the client-side runtime error that causes the app to render the router error fallback screen (\"Something went wrong\") on initial load, so authenticated users can reliably see the app (Dashboard and other routes) without crashing.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-10"
+          "msg-1"
         ],
         "quotes": [
-          "Gold für Highlights.\nDunkles Jadegrün für Gesundheitswerte.\nSmaragd und Türkis für Wasser/Ernährung.\nRubinrot nur für Warnungen.\nGlas-Layer + leichtes Bokeh für Tiefe."
+          "Something went wrong\nAn unexpected error occurred while loading the application.\nPlease try reloading the page. If the problem persists, contact support."
         ]
       },
       "acceptanceCriteria": [
-        "Dashboard no longer uses the blue–violet palette as the primary accent; the dominant accents match gold/jade/emerald/turquoise, and destructive/warning states remain ruby-red.",
-        "All newly introduced user-facing labels are in English (and still respect the existing German/English toggle where applicable).",
-        "No existing tracking inputs, calculations, or mutations on the Dashboard are removed or functionally altered."
+        "Opening the app no longer immediately shows the router-level error fallback screen during normal operation.",
+        "Any remaining errors are logged to the browser console with enough detail to diagnose them, but the UI remains usable (no crash loop)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Implement a subtle animated 'gold energy source' background for the Dashboard: keep the gold background visually static overall but add a barely noticeable caustics/light-ray drift effect (e.g., a fixed full-screen overlay layer with very low opacity and slow movement).",
+      "text": "Remove the LivSpan logo image from the UI so no image is displayed on the login screen and in the authenticated header area (e.g., remove/disable the <img> rendering that references \"/assets/MagicEraser_251230_145221.png\"), while keeping the rest of the layout visually coherent.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-10"
+          "msg-1"
         ],
         "quotes": [
-          "Der goldene Hintergrund bleibt statisch, aber bekommt eine leichte, kaum sichtbare Bewegung, wie Sonnenstrahlen, die durch Glas brechen."
+          "Bitte das Bild nicht mehr einblenden"
         ]
       },
       "acceptanceCriteria": [
-        "A low-opacity animated overlay is visible behind Dashboard content and does not interfere with scrolling or clicking (pointer-events disabled).",
-        "The animation is subtle (slow drift, no rapid flashing) and performance-safe (no heavy JS animation loops required).",
-        "The effect is only present on Dashboard (or is safely reusable elsewhere without breaking other pages)."
+        "The login screen no longer renders the logo image sourced from \"/assets/MagicEraser_251230_145221.png\".",
+        "The authenticated header no longer renders the logo image sourced from \"/assets/MagicEraser_251230_145221.png\".",
+        "No broken-image placeholder or empty image box is visible anywhere in the UI."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Redesign routine sections on the Dashboard as futuristic semi-transparent glass 'Energy Capsules' with a soft glow, using completion-based fill that visually fills upward as the routine is completed (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements).",
+      "text": "After a user completes authentication (Internet Identity login), always route them directly to the Dashboard route (\"/\") regardless of which route they attempted to visit while unauthenticated.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-10"
+          "msg-1"
         ],
         "quotes": [
-          "Jede Routine (Fasten, Schlaf, Training, Ernährung, Körperwerte, Supplements) erscheint nicht mehr als einfache Karte, sondern als halbtransparente Glas-Kachel mit leichtem Glow.\nWenn eine Routine ausgefüllt wird, „füllt“ sich die Kapsel optisch mit Farbe, fast wie Energie, die in den Tag fließt."
+          "nach der Anmeldung direkt auf das Dashboard gehen"
         ]
       },
       "acceptanceCriteria": [
-        "Each routine section is presented inside an EnergyCapsule-like container with glass styling and a completion fill animation tied to the existing completion computations in Dashboard.",
-        "Completion fill animates smoothly (no jump cuts) when values change, and the glow becomes more noticeable at higher completion (e.g., >70%).",
-        "EnergyCapsule supports at least two accent modes (e.g., gold for highlights and jade for health-related sections) and the chosen accent is reflected in fill/glow styling."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Upgrade the score area to feel like a 'portal to the future': ensure the central score ring has a gentle pulse, a gold shimmer on contours, and an additional thin spark ring/particle circle that rotates slowly around it (pure CSS/SVG/canvas acceptable).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-10"
-        ],
-        "quotes": [
-          "Ein großer zentraler Longevity- oder Autophagie-Ring, der animiert pulsiert.\nLeichter Gold-Schimmer auf den Konturen.\nEin dünner Funkenkreis, der ganz langsam rotiert."
-        ]
-      },
-      "acceptanceCriteria": [
-        "The score ring visibly pulses subtly and uses gold shimmer accents rather than blue–violet gradients.",
-        "A separate thin rotating spark ring (or equivalent subtle rotating spark effect) is rendered around the score visualization.",
-        "The effect does not reduce text readability and does not cause layout shift."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Implement the 'Future Projection Layer' as a dedicated section on the Dashboard (either above the main routine grid or in a clearly separated block), showing three panels: Biological Youth, Body Form, and Energy & Focus, each with trend indicator, numeric value, and a small elegant silhouette outline.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-10"
-        ],
-        "quotes": [
-          "„Future Projection Layer“:\nDrei Bereiche: Biologische Jugend, Körperform, Energie & Fokus.\nJeder Bereich visualisiert Trendpfeile, Zahlen und eine kleine Zukunfts-Silhouette (dein zukünftiges Ich als elegante Outline)."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Dashboard displays a clearly labeled 'Future Projection' section containing exactly the three requested areas with value + trend + silhouette visual.",
-        "Trend indicators are visually consistent with the new palette (e.g., positive in jade/emerald, negative in ruby/destructive, neutral muted).",
-        "The section remains fully functional with existing computed values and does not require new backend data."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Apply minimal-but-impactful micro-animations across Dashboard interactions: sliders should feel fluid, supplement completion should trigger a soft wipe highlight, and saving training should trigger a brief energy pulse animation (without adding new popups or changing workflows).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-10"
-        ],
-        "quotes": [
-          "Animationen minimal aber wirkungsvoll\nSlider fließen statt springen.\nSupplements färben sich in einem sanften Wipe-Effekt ein.\nTraining zeigt beim Speichern eine kurze Energie-Pulse-Animation."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Sliders on Dashboard use smooth transitions (track/thumb/value changes feel continuous) without causing input lag.",
-        "Toggling a supplement completion triggers a subtle wipe/highlight animation on the affected list item.",
-        "When a training save action occurs, the training area shows a brief pulse animation and returns to normal automatically."
+        "If a user opens a deep link (e.g., \"/wallet\") while logged out, they are shown the login screen; after logging in, they are redirected to \"/\" (Dashboard).",
+        "If a user logs in from the login screen, the next rendered page is the Dashboard at path \"/\"."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/components/ui (read-only).",
-    "Do not modify any paths listed as immutable in SYSTEM_CONTEXT (compose them instead).",
-    "Keep backend architecture as a single Motoko actor; no new backend services.",
-    "Preserve all existing Dashboard functionality and calculations; this request is UI/UX-focused."
+    "Do not edit files under frontend/src/components/ui (read-only).",
+    "Do not modify frontend immutable hook entrypoints: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx."
   ],
   "nonGoals": [
-    "Adding new routine types, changing score formulas, or altering token reward logic.",
-    "Adding third-party services, real-time features, or external databases.",
-    "Reworking authentication (Internet Identity) or changing the existing language preference system."
+    "Do not add new authentication providers (only Internet Identity).",
+    "Do not redesign unrelated pages (Wallet/Analysis/Journal) beyond what is required to remove the image and fix the crash."
   ],
   "imageRequirements": {
-    "required": [
-      "Abstract gold caustics light-ray overlay texture, seamless/cover-ready (gold-caustics-overlay.dim_2400x1350.png)",
-      "Elegant futuristic human silhouette outline, minimal line art on transparent background (future-silhouette-outline.dim_512x512.png)",
-      "Soft premium bokeh overlay texture with warm gold highlights on dark background (luxury-bokeh-overlay.dim_2400x1350.png)"
-    ],
+    "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

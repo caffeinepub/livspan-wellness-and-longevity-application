@@ -13,11 +13,6 @@ export default function LoginScreen() {
       
       <div className="relative z-10 flex flex-col items-center gap-8 px-4">
         <div className="flex flex-col items-center gap-4">
-          <img 
-            src="/assets/MagicEraser_251230_145221.png" 
-            alt="LivSpan Logo" 
-            className="h-40 w-40 object-contain" 
-          />
           <div className="text-center">
             <h1 className="text-5xl font-bold tracking-tight luxury-text-gold">LivSpan</h1>
             <p className="mt-2 text-xl text-muted-foreground">Decode your Longevity</p>

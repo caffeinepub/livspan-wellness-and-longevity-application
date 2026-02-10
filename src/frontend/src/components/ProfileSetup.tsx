@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
-import { Variant_de_en, Gender } from '../backend';
+import { UserProfile } from '../backend';
 
 export default function ProfileSetup() {
   const [name, setName] = useState('');
@@ -26,24 +26,17 @@ export default function ProfileSetup() {
       return;
     }
 
-    let genderEnum: Gender;
-    if (gender === 'male') {
-      genderEnum = Gender.male;
-    } else if (gender === 'female') {
-      genderEnum = Gender.female;
-    } else {
-      genderEnum = Gender.other;
-    }
-
-    saveProfile({
+    const profile: UserProfile = {
       name: name.trim(),
       birthYear: BigInt(year),
       bodyHeightCm: BigInt(height),
-      gender: genderEnum,
+      gender: gender as any,
       preferences: {
-        language: language === 'en' ? Variant_de_en.en : Variant_de_en.de,
+        language: language as any,
       },
-    });
+    };
+
+    saveProfile(profile);
   };
 
   const isFormValid = name.trim() && birthYear && bodyHeightCm;

@@ -1,82 +1,88 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, X, Save, RotateCcw } from 'lucide-react';
-import { TrainingType, TrainingIntensity, Training } from '../backend';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Plus, Trash2, Save, RotateCcw } from 'lucide-react';
+import { Training, TrainingType, TrainingIntensity } from '../backend';
 
 interface TrainingCardProps {
-  isGerman: boolean;
   trainingSessions: Training[];
   onTrainingSessionsChange: (sessions: Training[]) => void;
-  onSaveTrainings?: () => void;
-  onLoadTrainings?: () => void;
-  onClearTrainings?: () => void;
+  onSaveTrainings: (sessions: Training[]) => Promise<void>;
+  onClearTrainings: () => Promise<void>;
+  isGerman: boolean;
   isSaving?: boolean;
-  isLoading?: boolean;
 }
 
-export default function TrainingCard({ 
-  isGerman, 
-  trainingSessions, 
+export default function TrainingCard({
+  trainingSessions,
   onTrainingSessionsChange,
   onSaveTrainings,
-  onLoadTrainings,
   onClearTrainings,
+  isGerman,
   isSaving = false,
-  isLoading = false,
 }: TrainingCardProps) {
-  const [showForm, setShowForm] = useState(false);
-  const [trainingType, setTrainingType] = useState<string>('cardio');
-  const [customType, setCustomType] = useState('');
-  const [duration, setDuration] = useState('');
-  const [intensity, setIntensity] = useState<TrainingIntensity>(TrainingIntensity.medium);
-  const [pulseTriggered, setPulseTriggered] = useState(false);
+  const [newType, setNewType] = useState<string>('cardio');
+  const [newDuration, setNewDuration] = useState<string>('30');
+  const [newIntensity, setNewIntensity] = useState<string>('medium');
+  const [customType, setCustomType] = useState<string>('');
+  const [isSavingLocal, setIsSavingLocal] = useState(false);
 
-  const handleAddTraining = () => {
-    if (!duration || parseInt(duration) <= 0) return;
+  const handleAddSession = () => {
+    const duration = parseInt(newDuration);
+    if (isNaN(duration) || duration <= 0) return;
 
-    let type: TrainingType;
-    if (trainingType === 'cardio') {
-      type = { __kind__: 'cardio', cardio: null };
-    } else if (trainingType === 'strength') {
-      type = { __kind__: 'strength', strength: null };
-    } else if (trainingType === 'yoga') {
-      type = { __kind__: 'yoga', yoga: null };
+    let trainingType: TrainingType;
+    if (newType === 'cardio') {
+      trainingType = { __kind__: 'cardio', cardio: null };
+    } else if (newType === 'strength') {
+      trainingType = { __kind__: 'strength', strength: null };
+    } else if (newType === 'yoga') {
+      trainingType = { __kind__: 'yoga', yoga: null };
     } else {
-      type = { __kind__: 'other', other: customType || 'Other' };
+      trainingType = { __kind__: 'other', other: customType || 'Other' };
+    }
+
+    let intensity: TrainingIntensity;
+    if (newIntensity === 'low') {
+      intensity = TrainingIntensity.low;
+    } else if (newIntensity === 'high') {
+      intensity = TrainingIntensity.high;
+    } else {
+      intensity = TrainingIntensity.medium;
     }
 
     const newSession: Training = {
-      trainingType: type,
-      durationMins: BigInt(parseInt(duration)),
+      trainingType,
+      durationMins: BigInt(duration),
       intensity,
     };
 
     onTrainingSessionsChange([...trainingSessions, newSession]);
-    setDuration('');
+    setNewDuration('30');
     setCustomType('');
-    setShowForm(false);
   };
 
-  const handleRemoveTraining = (index: number) => {
-    onTrainingSessionsChange(trainingSessions.filter((_, i) => i !== index));
+  const handleRemoveSession = (index: number) => {
+    const updated = trainingSessions.filter((_, i) => i !== index);
+    onTrainingSessionsChange(updated);
   };
 
-  const handleSaveTrainings = () => {
-    if (onSaveTrainings) {
-      onSaveTrainings();
-      setPulseTriggered(true);
-      setTimeout(() => setPulseTriggered(false), 600);
+  const handleSave = async () => {
+    setIsSavingLocal(true);
+    try {
+      await onSaveTrainings(trainingSessions);
+    } finally {
+      setIsSavingLocal(false);
     }
   };
 
   const getTrainingTypeLabel = (type: TrainingType): string => {
-    if (type.__kind__ === 'cardio') return 'Cardio';
+    if (type.__kind__ === 'cardio') return isGerman ? 'Cardio' : 'Cardio';
     if (type.__kind__ === 'strength') return isGerman ? 'Kraft' : 'Strength';
-    if (type.__kind__ === 'yoga') return 'Yoga';
+    if (type.__kind__ === 'yoga') return isGerman ? 'Yoga' : 'Yoga';
     return type.other;
   };
 
@@ -87,133 +93,133 @@ export default function TrainingCard({
   };
 
   return (
-    <Card className={`glass-panel glass-panel-hover shadow-glass ${pulseTriggered ? 'training-pulse' : ''}`}>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/assets/generated/morning-routine-transparent.dim_64x64.png" alt="Training" className="h-8 w-8 drop-shadow-md" />
-            <CardTitle className="text-lg luxury-text-gold">{isGerman ? 'Training' : 'Training'}</CardTitle>
+    <Card className="glass-panel border-luxury-gold/20">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 luxury-text-gold">
+          <img 
+            src="/assets/generated/morning-routine-transparent.dim_64x64.png" 
+            alt="Training" 
+            className="h-8 w-8"
+          />
+          {isGerman ? 'Training' : 'Training'}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-2">
+            <Label>{isGerman ? 'Typ' : 'Type'}</Label>
+            <Select value={newType} onValueChange={setNewType}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="cardio">{isGerman ? 'Cardio' : 'Cardio'}</SelectItem>
+                <SelectItem value="strength">{isGerman ? 'Kraft' : 'Strength'}</SelectItem>
+                <SelectItem value="yoga">{isGerman ? 'Yoga' : 'Yoga'}</SelectItem>
+                <SelectItem value="other">{isGerman ? 'Andere' : 'Other'}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <div className="flex gap-2">
-            {onSaveTrainings && (
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={handleSaveTrainings}
-                disabled={isSaving || trainingSessions.length === 0}
-                className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
-                title={isGerman ? 'Training speichern' : 'Save training'}
-              >
-                <Save className="h-4 w-4" />
-              </Button>
-            )}
-            {onClearTrainings && trainingSessions.length > 0 && (
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={onClearTrainings}
-                disabled={isLoading}
-                className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10"
-                title={isGerman ? 'Training löschen' : 'Clear training'}
-              >
-                <RotateCcw className="h-4 w-4" />
-              </Button>
-            )}
-            <Button size="sm" variant="outline" onClick={() => setShowForm(!showForm)} className="transition-all duration-200 hover:scale-105 border-luxury-gold/30 hover:bg-luxury-gold/10">
-              {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+
+          {newType === 'other' && (
+            <div className="space-y-2">
+              <Label>{isGerman ? 'Benutzerdefiniert' : 'Custom'}</Label>
+              <Input
+                type="text"
+                value={customType}
+                onChange={(e) => setCustomType(e.target.value)}
+                placeholder={isGerman ? 'Trainingsart' : 'Training type'}
+              />
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <Label>{isGerman ? 'Dauer (Min)' : 'Duration (min)'}</Label>
+            <Input
+              type="number"
+              value={newDuration}
+              onChange={(e) => setNewDuration(e.target.value)}
+              min="1"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>{isGerman ? 'Intensität' : 'Intensity'}</Label>
+            <Select value={newIntensity} onValueChange={setNewIntensity}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">{isGerman ? 'Niedrig' : 'Low'}</SelectItem>
+                <SelectItem value="medium">{isGerman ? 'Mittel' : 'Medium'}</SelectItem>
+                <SelectItem value="high">{isGerman ? 'Hoch' : 'High'}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-end">
+            <Button onClick={handleAddSession} className="w-full">
+              <Plus className="h-4 w-4 mr-2" />
+              {isGerman ? 'Hinzufügen' : 'Add'}
             </Button>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
+
         {trainingSessions.length > 0 && (
           <div className="space-y-2">
-            {trainingSessions.map((session, index) => (
-              <div key={index} className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/20 backdrop-blur-sm p-3 transition-all duration-200 hover:bg-muted/30">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{getTrainingTypeLabel(session.trainingType)}</span>
-                    <span className="text-xs text-muted-foreground">•</span>
-                    <span className="text-sm text-muted-foreground">{session.durationMins.toString()} min</span>
-                    <span className="text-xs text-muted-foreground">•</span>
-                    <span className="text-sm text-muted-foreground">{getIntensityLabel(session.intensity)}</span>
+            <Label>{isGerman ? 'Trainingseinheiten' : 'Training Sessions'}</Label>
+            <div className="space-y-2">
+              {trainingSessions.map((session, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-luxury-gold/10"
+                >
+                  <div className="flex-1">
+                    <span className="font-medium text-luxury-gold">
+                      {getTrainingTypeLabel(session.trainingType)}
+                    </span>
+                    <span className="text-muted-foreground mx-2">•</span>
+                    <span className="text-foreground">
+                      {Number(session.durationMins)} {isGerman ? 'Min' : 'min'}
+                    </span>
+                    <span className="text-muted-foreground mx-2">•</span>
+                    <span className="text-sm text-muted-foreground">
+                      {getIntensityLabel(session.intensity)}
+                    </span>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveSession(index)}
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
-                <Button size="sm" variant="ghost" onClick={() => handleRemoveTraining(index)} className="transition-all duration-200 hover:scale-110">
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
-        {showForm && (
-          <div className="space-y-4 rounded-lg border border-luxury-gold/30 bg-luxury-gold/5 backdrop-blur-sm p-4">
-            <div className="space-y-2">
-              <Label htmlFor="training-type">{isGerman ? 'Trainingstyp' : 'Training Type'}</Label>
-              <Select value={trainingType} onValueChange={setTrainingType}>
-                <SelectTrigger id="training-type">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="cardio">Cardio</SelectItem>
-                  <SelectItem value="strength">{isGerman ? 'Kraft' : 'Strength'}</SelectItem>
-                  <SelectItem value="yoga">Yoga</SelectItem>
-                  <SelectItem value="other">{isGerman ? 'Andere' : 'Other'}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {trainingType === 'other' && (
-              <div className="space-y-2">
-                <Label htmlFor="custom-type">{isGerman ? 'Benutzerdefinierter Typ' : 'Custom Type'}</Label>
-                <Input
-                  id="custom-type"
-                  type="text"
-                  placeholder={isGerman ? 'z.B. Pilates, Schwimmen' : 'e.g. Pilates, Swimming'}
-                  value={customType}
-                  onChange={(e) => setCustomType(e.target.value)}
-                />
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="duration">{isGerman ? 'Dauer (Minuten)' : 'Duration (Minutes)'}</Label>
-              <Input
-                id="duration"
-                type="number"
-                placeholder="30"
-                value={duration}
-                onChange={(e) => setDuration(e.target.value)}
-                min="1"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="intensity">{isGerman ? 'Intensität' : 'Intensity'}</Label>
-              <Select value={intensity} onValueChange={(val) => setIntensity(val as TrainingIntensity)}>
-                <SelectTrigger id="intensity">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={TrainingIntensity.low}>{isGerman ? 'Niedrig' : 'Low'}</SelectItem>
-                  <SelectItem value={TrainingIntensity.medium}>{isGerman ? 'Mittel' : 'Medium'}</SelectItem>
-                  <SelectItem value={TrainingIntensity.high}>{isGerman ? 'Hoch' : 'High'}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button onClick={handleAddTraining} className="w-full transition-all duration-200 hover:scale-105 bg-luxury-gold hover:bg-luxury-gold-bright text-black" disabled={!duration || parseInt(duration) <= 0}>
-              {isGerman ? 'Training hinzufügen' : 'Add Training'}
-            </Button>
-          </div>
-        )}
-
-        {trainingSessions.length === 0 && !showForm && (
-          <p className="text-center text-sm text-muted-foreground">
-            {isGerman ? 'Noch keine Trainingseinheiten' : 'No training sessions yet'}
-          </p>
-        )}
+        <div className="flex gap-2 pt-4">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving || isSavingLocal || trainingSessions.length === 0}
+            className="flex-1 bg-gradient-to-r from-luxury-gold-dark to-luxury-gold hover:from-luxury-gold hover:to-luxury-gold-light"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {isSaving || isSavingLocal ? (isGerman ? 'Speichern...' : 'Saving...') : (isGerman ? 'Speichern' : 'Save')}
+          </Button>
+          <Button
+            onClick={onClearTrainings}
+            disabled={isSaving || isSavingLocal || trainingSessions.length === 0}
+            variant="outline"
+            className="border-luxury-gold/20 hover:bg-luxury-gold/10"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            {isGerman ? 'Löschen' : 'Clear'}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

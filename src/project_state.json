@@ -1,57 +1,34 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Dashboard/UI-Redesign mit goldenem Premium-Look, glasartigen Routine-Kacheln, animiertem Score-Ring und einem „Future Projection Layer“ zur Zukunftsvisualisierung der Routinen.",
+  "summary": "Web app with authentication; user requests to remove an image from the UI and change post-login routing to go directly to the dashboard. Current issue: application fails to load with a generic unexpected error.",
   "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Abstract gold caustics light-ray overlay texture, seamless/cover-ready (gold-caustics-overlay.dim_2400x1350.png)\n- Elegant futuristic human silhouette outline, minimal line art on transparent background (future-silhouette-outline.dim_512x512.png)\n- Soft premium bokeh overlay texture with warm gold highlights on dark background (luxury-bokeh-overlay.dim_2400x1350.png)",
+  "known_issues": [
+    "Application fails to load with error: \"Something went wrong — An unexpected error occurred while loading the application.\""
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-update-the-dashboard-visual-theme-to-a-premium-gold-dark-jade-emerald-turquoise-palette-with-ruby-red-reserved-for-warnings-and-apply-it-consistently-across-dashboard-surfaces-background-cards-panels-borders-highlights-icons-and-interactive-states-while-keeping-all-existing-functionality-unchanged",
-      "title": "Update the Dashboard visual theme to a premium gold + dark jade + emerald/turquoise palette with ruby-red reserved for warnings, and apply it consistently across Dashboard surfaces (background, cards/panels, borders, highlights, icons, and interactive states) while keeping all existing functionality unchanged.",
+      "id": "feature-identify-and-fix-the-client-side-runtime-error-that-causes-the-app-to-render-the-router-error-fallback-screen-something-went-wrong-on-initial-load-so-authenticated-users-can-reliably-see-the-app-dashboard-and-other-routes-without-crashing",
+      "title": "Identify and fix the client-side runtime error that causes the app to render the router error fallback screen (\"Something went wrong\") on initial load, so authenticated users can reliably see the app (Dashboard and other routes) without crashing.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-a-subtle-animated-gold-energy-source-background-for-the-dashboard-keep-the-gold-background-visually-static-overall-but-add-a-barely-noticeable-caustics-light-ray-drift-effect-e-g-a-fixed-full-screen-overlay-layer-with-very-low-opacity-and-slow-movement",
-      "title": "Implement a subtle animated 'gold energy source' background for the Dashboard: keep the gold background visually static overall but add a barely noticeable caustics/light-ray drift effect (e.g., a fixed full-screen overlay layer with very low opacity and slow movement).",
+      "id": "feature-remove-the-livspan-logo-image-from-the-ui-so-no-image-is-displayed-on-the-login-screen-and-in-the-authenticated-header-area-e-g-remove-disable-the-img-rendering-that-references-assets-magiceraser-251230-145221-png-while-keeping-the-rest-of-the-layout-visually-coherent",
+      "title": "Remove the LivSpan logo image from the UI so no image is displayed on the login screen and in the authenticated header area (e.g., remove/disable the <img> rendering that references \"/assets/MagicEraser_251230_145221.png\"), while keeping the rest of the layout visually coherent.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-redesign-routine-sections-on-the-dashboard-as-futuristic-semi-transparent-glass-energy-capsules-with-a-soft-glow-using-completion-based-fill-that-visually-fills-upward-as-the-routine-is-completed-fasting-sleep-training-nutrition-body-metrics-supplements",
-      "title": "Redesign routine sections on the Dashboard as futuristic semi-transparent glass 'Energy Capsules' with a soft glow, using completion-based fill that visually fills upward as the routine is completed (Fasting, Sleep, Training, Nutrition, Body metrics, Supplements).",
+      "id": "feature-after-a-user-completes-authentication-internet-identity-login-always-route-them-directly-to-the-dashboard-route-regardless-of-which-route-they-attempted-to-visit-while-unauthenticated",
+      "title": "After a user completes authentication (Internet Identity login), always route them directly to the Dashboard route (\"/\") regardless of which route they attempted to visit while unauthenticated.",
       "reqIds": [
         "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-upgrade-the-score-area-to-feel-like-a-portal-to-the-future-ensure-the-central-score-ring-has-a-gentle-pulse-a-gold-shimmer-on-contours-and-an-additional-thin-spark-ring-particle-circle-that-rotates-slowly-around-it-pure-css-svg-canvas-acceptable",
-      "title": "Upgrade the score area to feel like a 'portal to the future': ensure the central score ring has a gentle pulse, a gold shimmer on contours, and an additional thin spark ring/particle circle that rotates slowly around it (pure CSS/SVG/canvas acceptable).",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-the-future-projection-layer-as-a-dedicated-section-on-the-dashboard-either-above-the-main-routine-grid-or-in-a-clearly-separated-block-showing-three-panels-biological-youth-body-form-and-energy-focus-each-with-trend-indicator-numeric-value-and-a-small-elegant-silhouette-outline",
-      "title": "Implement the 'Future Projection Layer' as a dedicated section on the Dashboard (either above the main routine grid or in a clearly separated block), showing three panels: Biological Youth, Body Form, and Energy & Focus, each with trend indicator, numeric value, and a small elegant silhouette outline.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-apply-minimal-but-impactful-micro-animations-across-dashboard-interactions-sliders-should-feel-fluid-supplement-completion-should-trigger-a-soft-wipe-highlight-and-saving-training-should-trigger-a-brief-energy-pulse-animation-without-adding-new-popups-or-changing-workflows",
-      "title": "Apply minimal-but-impactful micro-animations across Dashboard interactions: sliders should feel fluid, supplement completion should trigger a soft wipe highlight, and saving training should trigger a brief energy pulse animation (without adding new popups or changing workflows).",
-      "reqIds": [
-        "REQ-6"
       ],
       "version": 1
     }
@@ -59,42 +36,18 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Goldener Hintergrund als lebendige „Energiequelle“ mit subtiler, kaum sichtbarer Licht-/Strahlenbewegung",
+      "summary": "Do not display the image/banner (remove the image from the UI)",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Routinen als futuristische halbtransparente Glas-„Energie-Kapseln“ mit Glow und Füll-Animation bei Completion (Fasten, Schlaf, Training, Ernährung, Körperwerte, Supplements)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Score-Bereich als animierter Longevity/Autophagie-Ring (pulsierend) mit Gold-Schimmer und langsam rotierendem Funkenkreis",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "„Future Projection Layer“ im/über dem Dashboard: Visualisierung des Einflusses heutiger Routinen auf Zukunft (Biologische Jugend, Körperform, Energie & Fokus) inkl. Trends, Zahlen, Silhouette-Outline",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Premium Farb- und UI-Stilguide: Gold Highlights, dunkles Jadegrün für Health, Smaragd/Türkis für Wasser/Ernährung, Rubinrot nur für Warnungen, Glas-Layer + leichtes Bokeh",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Minimale aber wirkungsvolle UI-Animationen: fließende Slider, sanfter Wipe-Effekt für Supplements, kurzer Energie-Pulse beim Training-Speichern",
+      "summary": "After login, redirect users directly to the dashboard (update post-auth routing)",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Premium gold dashboard redesign with animated energy background, energy capsules, portal score ring, and future projection layer",
+  "projectName": "Remove logo image, redirect to Dashboard after login, and fix app load crash",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }
